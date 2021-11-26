@@ -4,7 +4,7 @@ import { ObjectiveModel } from "./objectives";
 const resolversProyecto = {
     Query: {
         leerProyectos: async (parent, args) => {
-            const proyectos = await ProjectModel.find().populate("lider");
+            const proyectos = await ProjectModel.find().populate("lider").populate('objetivos').populate('avances').populate('inscripciones');
             return proyectos;
         },
 
@@ -50,6 +50,10 @@ const resolversProyecto = {
             });
             return proyecto;
         },
+
+        // editarProyecto: async (parent, args) => {
+        //     const proyecto = await ProjectModel.
+        // }
     },
 };
 

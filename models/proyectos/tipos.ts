@@ -22,6 +22,7 @@ const tiposProyecto = gql`
     type Query {
         leerProyectos: [Proyecto]
         leerProyecto(_id: ID, nombre: String): Proyecto
+        leerObjtivos(proyecto: Proyecto)
     }
     type Mutation {
         crearProyecto(
@@ -29,14 +30,26 @@ const tiposProyecto = gql`
             presupuesto: Float!
             fechaInicio: Date!
             fechaTerminacion: Date!
-            lider: ID!            
+            lider: ID!
         ): Proyecto
 
         crearObjetivo(
             descripcion: String!
             tipo: Enum_TipoObjetivo!
             proyecto: ID!
-        ): Objetivo
+        ): Proyecto
+
+        editarProyecto(
+            _id: ID!
+            nombre: String!
+            presupuesto: Float
+            fechaInicio: Date
+            fechaTerminacion: Date
+            lider: Usuario
+            estado: Enum_EstadoProyecto
+            fase: Enum_FaseProyecto
+            objetivos: [Objetivo]
+        ): Proyecto
     }
 `;
 
