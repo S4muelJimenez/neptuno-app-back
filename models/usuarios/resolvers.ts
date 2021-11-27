@@ -25,8 +25,8 @@ const resolversUsuario = {
     Mutation: {
         crearUsuario: async (paren, args) => {
             const usuarioCreado = await UserModel.create({
-                nombre: args.nombre,
-                apellido: args.apellido,
+                nombres: args.nombres,
+                apellidos: args.apellidos,
                 identificacion: args.identificacion,
                 correo: args.correo,
                 rol: args.rol,
@@ -55,8 +55,8 @@ const resolversUsuario = {
         editarUsuario: async (parent, args) => {
             const usuarioEditado = await UserModel.findByIdAndUpdate(args._id,
                 {
-                    nombre: args.nombre,
-                    apellido: args.apellido,
+                    nombres: args.nombres,
+                    apellidos: args.apellidos,
                     identificacion: args.identificacion,
                     correo: args.correo,
                     rol: args.rol,
