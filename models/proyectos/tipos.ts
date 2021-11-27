@@ -3,6 +3,7 @@ import { gql } from "apollo-server-express";
 const tiposProyecto = gql`
     type Objetivo {
         _id: ID!
+        index: Int!
         descripcion: String!
         tipo: Enum_TipoObjetivo!
         proyecto: Proyecto!
@@ -50,7 +51,7 @@ const tiposProyecto = gql`
             fechaTerminacion: Date
             lider: ID
             estado: Enum_EstadoProyecto
-            fase: Enum_FaseProyecto            
+            fase: Enum_FaseProyecto
         ): Proyecto
 
         editarObjetivos(
@@ -59,7 +60,13 @@ const tiposProyecto = gql`
             descripcion: String
             tipo:Enum_TipoObjetivo
         ):[Objetivo]
+
+        eliminarProyecto(
+            _id: ID!                    
+        ): Proyecto
     }
+
+    #Falta incluir los avances y las inscripciones para ser mostradas al buscar un proyecto.
 `;
 
 export { tiposProyecto };

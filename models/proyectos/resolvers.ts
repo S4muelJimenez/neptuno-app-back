@@ -33,23 +33,18 @@ const resolversProyecto = {
                 const objetivos = await ObjectiveModel.find({
                     proyecto: args.proyecto,
                 });
+                objetivos.forEach((objetivo, indice)=>{
+                    objetivo['index']=indice
+                })                ;
                 return objetivos;
             } else if (Object.keys(args).includes("_id")) {
-                const objetivos = await ObjectiveModel.find({ _id: args._id });
+                const objetivos = await ObjectiveModel.findOne({ _id: args._id });
                 return objetivos;
             }
         },
     },
 
     Mutation: {
-        crearObjetivo: async (parent, args) => {
-            const objetivo = await ObjectiveModel.create({
-                descripcion: args.descripcion,
-                tipo: args.tipo,
-                proyecto: args.proyecto,
-            });
-            return objetivo;
-        },
         crearProyecto: async (parent, args) => {
             const proyecto = await ProjectModel.create({
                 nombre: args.nombre,
@@ -58,7 +53,21 @@ const resolversProyecto = {
                 fechaTerminacion: args.fechaTerminacion,
                 lider: args.usuario,
             });
+            if (Object.keys(args).includes("estado")){
+                proyecto.estado=args.estado
+            }
+            if (Object.keys(args).includes("fase")){
+                proyecto.fase=args.fase
+            }
             return proyecto;
+        },
+        crearObjetivo: async (parent, args) => {
+            const objetivo = await ObjectiveModel.create({
+                descripcion: args.descripcion,
+                tipo: args.tipo,
+                proyecto: args.proyecto,
+            });
+            return objetivo;
         },
 
         editarProyecto: async (parent, args) => {
@@ -79,7 +88,8 @@ const resolversProyecto = {
 
         editarObjetivos: async (parent, args) => {
             const objetivos = await ObjectiveModel.find({
-                proyecto: args.proyecto, tipo: args.tipo
+                proyecto: args.proyecto,
+                tipo: args.tipo,
             });
             await objetivos[args.index].update(
                 {
@@ -88,8 +98,17 @@ const resolversProyecto = {
                 },
                 { new: true }
             );
+            return objetivos;
+        },
 
-            return objetivos
+        eliminarProyecto: async (parent, args) => {
+            const objetivos = await ObjectiveModel.deleteMany({
+                proyecto: args._id,
+            });
+            const proyecto = await ProjectModel.findOneAndRemove({
+                _id: args._id,
+            });
+            return proyecto;
         },
     },
 };
