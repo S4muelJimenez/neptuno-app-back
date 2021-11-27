@@ -12,9 +12,9 @@ const typeAvance = gql`
     input datosAvance{
         _id: ID!,
         descripcion:String!
-        estudiante: Usuario!
+        estudiante: ID!
         fechaAvance: Date!
-        proyecto: Proyecto!
+        proyecto: ID!
     }
 
     type Query{
