@@ -72,7 +72,13 @@ const resolversProyecto = {
             );
         },
 
-        editarObjetivos: async (parent, args) => {},
+        editarObjetivos: async (parent, args) => {
+            const objetivos = await ObjectiveModel.find()
+            objetivos[args.index].update({
+                
+
+            })
+        },
     },
 };
 
