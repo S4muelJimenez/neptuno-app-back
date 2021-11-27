@@ -17,10 +17,6 @@ const resolversProyecto = {
                 })
                     .populate("lider")
                     .populate("objetivos");
-                /* const objetivosProyectoBuscado = await ObjectiveModel.find({
-                    proyecto: args._id,
-                });
-                proyectoBuscado["objetivos"] = objetivosProyectoBuscado; */
                 return proyectoBuscado;
             } else if (Object.keys(args).includes("_id")) {
                 const proyectoBuscado = await ProjectModel.findOne({
@@ -28,11 +24,19 @@ const resolversProyecto = {
                 })
                     .populate("lider")
                     .populate("objetivos");
-                /* const objetivosProyectoBuscado = await ObjectiveModel.find({
-                    proyecto: args._id,
-                });
-                proyectoBuscado["objetivos"] = objetivosProyectoBuscado; */
                 return proyectoBuscado;
+            }
+        },
+
+        leerObjetivos: async (parent, args) => {
+            if (Object.keys(args).includes("proyecto")) {
+                const objetivos = await ObjectiveModel.find({
+                    proyecto: args.proyecto,
+                });
+                return objetivos;
+            } else if (Object.keys(args).includes("_id")) {
+                const objetivos = await ObjectiveModel.find({ _id: args._id });
+                return objetivos;
             }
         },
     },
@@ -68,16 +72,24 @@ const resolversProyecto = {
                     estado: args.estado,
                     fase: args.fase,
                     lider: args.lider,
-                }
+                },
+                { new: true }
             );
         },
 
         editarObjetivos: async (parent, args) => {
-            const objetivos = await ObjectiveModel.find()
-            objetivos[args.index].update({
-                
+            const objetivos = await ObjectiveModel.find({
+                proyecto: args.proyecto, tipo: args.tipo
+            });
+            await objetivos[args.index].update(
+                {
+                    descripcion: args.descripcion,
+                    tipo: args.tipo,
+                },
+                { new: true }
+            );
 
-            })
+            return objetivos
         },
     },
 };

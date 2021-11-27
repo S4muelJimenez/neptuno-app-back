@@ -24,8 +24,8 @@ const tiposProyecto = gql`
     }
     type Query {
         leerProyectos: [Proyecto]
-        leerProyecto(_id: ID, nombre: String): Proyecto
-        leerObjetivos(_id: ID): [Objetivo]
+        leerProyecto(_id: ID!, nombre: String): Proyecto
+        leerObjetivos(_id: ID, proyecto: ID!): [Objetivo]
     }
     type Mutation {
         crearProyecto(
@@ -54,8 +54,11 @@ const tiposProyecto = gql`
         ): Proyecto
 
         editarObjetivos(
-            
-        )
+            proyecto: ID!
+            index:Int!
+            descripcion: String
+            tipo:Enum_TipoObjetivo
+        ):[Objetivo]
     }
 `;
 
