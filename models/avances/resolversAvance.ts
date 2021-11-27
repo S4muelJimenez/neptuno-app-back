@@ -10,6 +10,14 @@ const resolversAvances = {
             return Avances;
         },
     },
+
+    Mutation: {
+        crearAvance: async (parent, args) => {
+
+            console.log("Ejecutando algo");
+
+        },
+    },
 }
 
 export { resolversAvances };
