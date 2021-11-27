@@ -12,3 +12,4 @@ const resolversAvances = {
     },
 }
 
+export { resolversAvances };
