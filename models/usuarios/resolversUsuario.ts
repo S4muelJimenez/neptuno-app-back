@@ -10,6 +10,8 @@ const resolversUsuario = {
         leerUsuario: async (parent, args) => {
             if (Object.keys(args).includes("_id")) {
                 const usuario = await UserModel.findOne({ _id: args._id })
+                console.log(usuario);
+                
                 return usuario
             } else if (Object.keys(args).includes("correo")) {
                 const usuario = await UserModel.findOne({ correo: args.correo })
