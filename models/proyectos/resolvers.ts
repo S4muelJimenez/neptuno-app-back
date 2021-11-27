@@ -4,7 +4,9 @@ import { ObjectiveModel } from "./objectives";
 const resolversProyecto = {
     Query: {
         leerProyectos: async (parent, args) => {
-            const proyectos = await ProjectModel.find().populate("lider").populate('objetivos');
+            const proyectos = await ProjectModel.find()
+                .populate("lider")
+                .populate("objetivos");
             return proyectos;
         },
 
@@ -12,7 +14,9 @@ const resolversProyecto = {
             if (Object.keys(args).includes("nombre")) {
                 const proyectoBuscado = await ProjectModel.findOne({
                     nombre: args.nombre,
-                }).populate("lider").populate('objetivos');
+                })
+                    .populate("lider")
+                    .populate("objetivos");
                 /* const objetivosProyectoBuscado = await ObjectiveModel.find({
                     proyecto: args._id,
                 });
@@ -21,7 +25,9 @@ const resolversProyecto = {
             } else if (Object.keys(args).includes("_id")) {
                 const proyectoBuscado = await ProjectModel.findOne({
                     _id: args._id,
-                }).populate("lider").populate('objetivos');
+                })
+                    .populate("lider")
+                    .populate("objetivos");
                 /* const objetivosProyectoBuscado = await ObjectiveModel.find({
                     proyecto: args._id,
                 });
@@ -29,7 +35,6 @@ const resolversProyecto = {
                 return proyectoBuscado;
             }
         },
-        
     },
 
     Mutation: {
@@ -53,9 +58,9 @@ const resolversProyecto = {
         },
 
         editarProyecto: async (parent, args) => {
-            
-            if (Object.keys(args).includes("_id")){
-                const proyecto = await ProjectModel.findByIdAndUpdate({_id:args._id},{
+            const proyecto = await ProjectModel.findByIdAndUpdate(
+                { _id: args._id },
+                {
                     nombre: args.nombre,
                     presupuesto: args.presupuesto,
                     fechaInicio: args.fechaInicio,
@@ -63,14 +68,12 @@ const resolversProyecto = {
                     estado: args.estado,
                     fase: args.fase,
                     lider: args.lider,
+                }
+            );
+        },
 
-                }).populate("lider").populate('objetivos')
-
-            }else if (Object.keys(args).includes("nombre")) {}
-
-        }
+        editarObjetivos: async (parent, args) => {},
     },
-    
 };
 
 export { resolversProyecto };
