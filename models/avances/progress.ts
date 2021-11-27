@@ -30,11 +30,7 @@ const progressSchema = new Schema<Progress>({
         require: true,
         ref: ProjectModel,
     },
-    /* observacionLider: {
-        type: Schema.Types.ObjectId,
-        default: null,
-        ref: LeaderObservationModel,
-    }, */
+    
 
 })
 
