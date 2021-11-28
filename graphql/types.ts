@@ -7,7 +7,7 @@ import { tiposUsuario } from '../models/usuarios/tipos';
 
 const tipoGobales = gql`
     scalar Date
-
+    
        
 `;
 
