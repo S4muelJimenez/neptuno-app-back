@@ -22,20 +22,20 @@ const resolversUsuario = {
     },
 
     Mutation: {
-        crearUsuario: async (paren, args) => {
-            const usuarioCreado = await UserModel.create({
-                nombres: args.nombres,
-                apellidos: args.apellidos,
-                identificacion: args.identificacion,
-                correo: args.correo,
-                rol: args.rol,
-            })
+        // crearUsuario: async (paren, args) => {
+        //     const usuarioCreado = await UserModel.create({
+        //         nombres: args.nombres,
+        //         apellidos: args.apellidos,
+        //         identificacion: args.identificacion,
+        //         correo: args.correo,
+        //         rol: args.rol,
+        //     })
 
-            if (Object.keys(args).includes("estado")) {//Esta validacion es necesaria pues de lo contrario solo tomaria el dato por defecto
-                usuarioCreado.estado = args.estado;
-            }
-            return usuarioCreado
-        },
+        //     if (Object.keys(args).includes("estado")) {//Esta validacion es necesaria pues de lo contrario solo tomaria el dato por defecto
+        //         usuarioCreado.estado = args.estado;
+        //     }
+        //     return usuarioCreado
+        // },
         eliminarUsuario: async (parent, args) => {
 
             //Buscar alternativa al codigo. P. ej, implementar un foreach para que recorra cada opcion: _id,correo,identificacion

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../usuarios/users";
 import {getToken} from '../../utils/tokenUtils';
+// import {getToken} from '../../index';
 
 const resolversAuth = {
     Mutation: {
@@ -21,9 +22,9 @@ const resolversAuth = {
         },
 
         Ingreso: async (parent, args, context) => {
-            const usuario = await UserModel.findOne({ correo: args.input.correo });
+            const usuario = await UserModel.findOne({ correo: args.correo });
             const isPasswordCorrect = bcrypt.compareSync(
-                args.input.password,
+                args.password,
                 usuario.password
             );
             if (!usuario || !isPasswordCorrect) {

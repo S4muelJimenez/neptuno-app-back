@@ -20,19 +20,17 @@ import { resolvers } from "./graphql/resolvers";
 //     jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, { expiresIn: "30 days" });
 
 // const getUserFromToken = async (token) => {
-//     if (!token) {
-//         return null;
+//     if (token) {
+
+//         const tokenData = jwt.verify(token, process.env.JWT_SECRET,);
+//           console.log(tokenData,token)
+//         return await UserModel.findOne({ _id: tokenData.id });
 //     }
-//     const tokenData = jwt.verify(token, process.env.JWT_SECRET);
-//     if (!tokenData?.id) {
-//         return null;
-//     }
-//     return await UserModel.findOne({ _id: tokenData.id });
+
 // };
 // export { getToken };
 
-
-import {getUserFromToken} from './utils/tokenUtils'
+import { getUserFromToken } from "./utils/tokenUtils";
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
@@ -51,7 +49,6 @@ app.use(express.json()); //Midleware para usar request como tipo JSON
 app.use(cors());
 
 app.listen({ port: process.env.PORT || 4000 }, async () => {
-    await conectarBD();
     await server
         .start()
         .then(() => {
@@ -60,8 +57,7 @@ app.listen({ port: process.env.PORT || 4000 }, async () => {
         .catch((e) => {
             console.log("No se pudo iniciar el servidor", e);
         });
-
+    await conectarBD();
     server.applyMiddleware({ app }); //Se le pasan los mismo middleware de express al servidor de apollo
     // The `listen` method launches a web server.
 });
-

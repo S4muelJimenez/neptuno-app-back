@@ -24,7 +24,7 @@ input SignIn{
 
 type Mutation{
     Registro (input:SignUp): AuthUser!
-    Ingreso (input:SignIn):AuthUser!
+    Ingreso (correo:String!, password:String!):AuthUser!
 }
 
 `;
