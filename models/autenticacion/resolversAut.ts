@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../usuarios/users";
-import {getToken} from '../../index';
+import {getToken} from '../../utils/tokenUtils';
 
 const resolversAuth = {
     Mutation: {
