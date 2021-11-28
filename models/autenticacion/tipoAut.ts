@@ -1,10 +1,11 @@
 import { gql } from "apollo-server-express";
 
+
 const tiposAuth = gql`
 
 type AuthUser{
     user: Usuario!
-    token:
+    token: String!
 }
 
 input SignUp{
@@ -22,8 +23,8 @@ input SignIn{
 }
 
 type Mutation{
-    registro (input:SignUp): AuthUser!
-    ingreso (input:SignIn):AuthUser!
+    Registro (input:SignUp): AuthUser!
+    Ingreso (input:SignIn):AuthUser!
 }
 
 `;

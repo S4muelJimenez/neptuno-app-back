@@ -1,29 +1,33 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../usuarios/users";
+import {getToken} from '../../index';
 
 const resolversAuth = {
     Mutation: {
-        SignUp: async (parent, args) => {
-            const hashedPassword = bcrypt.hashSync(args.password);
-
+        Registro: async (parent, args, context) => {
+            const hashedPassword = bcrypt.hashSync(args.input.password);
+            // const usuarioNuevo = {
+            //     ...args,
+            //     password: hashedPassword
+            // }
             const usuario = await UserModel.create({
-                identificacion: args.identificacion,
-                nombres: args.nombres,
-                apellidos: args.apellidos,
-                correo: args.correo,
-                rol: args.rol,
-                password: hashedPassword,
+                identificacion: args.input.identificacion,
+                apellidos:args.input.apellidos,
+                correo:args.input.correo,
+                nombres:args.input.nombres,
+                rol:args.input.rol,
+                password: hashedPassword
             });
             return {
                 user: usuario,
-                token: "",
+                token: getToken(usuario),
             };
         },
 
-        SignIn: async (parent, args) => {
-            const usuario = await UserModel.findOne({ correo: args.correo });
+        Ingreso: async (parent, args, context) => {
+            const usuario = await UserModel.findOne({ correo: args.input.correo });
             const isPasswordCorrect = bcrypt.compareSync(
-                args.password,
+                args.input.password,
                 usuario.password
             );
             if (!usuario || !isPasswordCorrect) {
@@ -31,8 +35,10 @@ const resolversAuth = {
             }
             return {
                 user: usuario,
-                token: "",
+                token: getToken(usuario),
             };
         },
     },
 };
+
+export {resolversAuth}
