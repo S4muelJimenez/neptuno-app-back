@@ -6,10 +6,6 @@ const resolversAuth = {
     Mutation: {
         Registro: async (parent, args, context) => {
             const hashedPassword = bcrypt.hashSync(args.input.password);
-            // const usuarioNuevo = {
-            //     ...args,
-            //     password: hashedPassword
-            // }
             const usuario = await UserModel.create({
                 identificacion: args.input.identificacion,
                 apellidos:args.input.apellidos,
