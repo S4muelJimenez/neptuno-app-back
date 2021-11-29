@@ -34,19 +34,19 @@ const resolversAuth = {
                 args.password,
                 usuario.password
             );
-            if (!usuario || !isPasswordCorrect) {
-                throw new Error("Credenciales Incorrectas!");
+            if (usuario && isPasswordCorrect) {
+                return {
+                    token: generateToken({
+                        _id: usuario._id,
+                        identificacion: usuario.identificacion,
+                        nombres: usuario.nombres,
+                        apellidos: usuario.apellidos,
+                        correo: usuario.correo,
+                        rol: usuario.rol,
+                    }),
+                };
+                //throw new Error("Credenciales Incorrectas!");
             }
-            return {
-                token: generateToken({
-                    _id: usuario._id,
-                    identificacion: usuario.identificacion,
-                    nombres: usuario.nombres,
-                    apellidos: usuario.apellidos,
-                    correo: usuario.correo,
-                    rol: usuario.rol,
-                }),
-            };
         },
     },
 };

@@ -36,7 +36,7 @@ const tiposAuth = gql`
             correo: String!, 
             password: String!
 
-        ): AuthUser!
+        ): Token!
     }
 `;
 
