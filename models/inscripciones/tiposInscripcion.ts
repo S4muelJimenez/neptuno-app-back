@@ -4,7 +4,6 @@ const typeInscripcion = gql`
     type Inscripcion{
         _id: ID!,
         proyecto: Proyecto!
-        estudiante: Usuario!
         estado: Enum_EstadoProyecto!
         fechaIngreso: Date!
         fechaEgreso: Date!      
@@ -20,7 +19,6 @@ const typeInscripcion = gql`
     type Mutation{
         crearInscripcion(
             proyecto: Proyecto!
-            estudiante: Usuario!
             estado: Enum_EstadoProyecto!
             fechaIngreso: Date!
             fechaEgreso: Date!   
@@ -29,7 +27,6 @@ const typeInscripcion = gql`
         editarInscripcion(
             _id: ID!,
             proyecto: Proyecto!
-            estudiante: Usuario!
             estado: Enum_EstadoProyecto!
             fechaIngreso: Date!
             fechaEgreso: Date!  

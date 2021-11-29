@@ -1,4 +1,3 @@
-import { UserModel } from "../usuarios/users";
 import { InscripcionesModel } from "./inscriptions";
 
 
@@ -38,18 +37,18 @@ const resolversIncripcion = {
             return inscripcionEditada;
         },
 
-        eliminarInscripcion: async (parent, args) => {
+        // eliminarInscripcion: async (parent, args) => {
 
-            if (Object.keys(args).includes(`_id`)) {
-                const inscripcionEliminada = InscripcionesModel.findOneAndDelete({ _id: args._id });
-                return inscripcionEliminada;
-            } else if (Object.keys(args).includes(`proyecto`)) {
-                const inscripcionEliminada = InscripcionesModel.findOneAndDelete({proyecto: args.proyecto});
-                return inscripcionEliminada;
-            }
+        //     if (Object.keys(args).includes(`_id`)) {
+        //         const inscripcionEliminada = InscripcionesModel.findOneAndDelete({ _id: args._id });
+        //         return inscripcionEliminada;
+        //     } else if (Object.keys(args).includes(`proyecto`)) {
+        //         const inscripcionEliminada = InscripcionesModel.findOneAndDelete({proyecto: args.proyecto});
+        //         return inscripcionEliminada;
+        //     }
 
 
-        },
+        // },
     },
 }
 
