@@ -48,6 +48,10 @@ const resolversAuth = {
                 //throw new Error("Credenciales Incorrectas!");
             }
         },
+
+        validarToken: async (parent, args, context) => {
+            
+        },
     },
 };
 

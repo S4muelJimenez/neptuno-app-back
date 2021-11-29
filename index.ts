@@ -30,17 +30,16 @@ import { resolvers } from "./graphql/resolvers";
 // };
 // export { getToken };
 
-import { getUserFromToken } from "./utils/tokenUtils";
+import { validateToken } from "./utils/tokenUtils";
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
-    context: async ({ req }) => {
-        const usuario = await getUserFromToken(req.headers.authorization);
-        console.log(usuario);
-        return usuario;
+    context: async () => {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYTMwMzQ0NTliMDAxOGVmN2I5NjIwYiIsImlhdCI6MTYzODEzODQwNiwiZXhwIjoxNjQwNzMwNDA2fQ.7PyI6rPH8S1nOP6PSrEf1svuqqixAbzaUmOuelWNucw"
+        validateToken(token)
     },
 });
 
