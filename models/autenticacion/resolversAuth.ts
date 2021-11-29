@@ -1,24 +1,30 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../usuarios/users";
-import {generateToken} from '../../utils/tokenUtils';
+import { generateToken } from "../../utils/tokenUtils";
 // import {getToken} from '../../index';
 
 const resolversAuth = {
     Mutation: {
         Registro: async (parent, args, context) => {
-            
-            const salt = await bcrypt.genSalt(10) //Rondas de encriptacion            
-            const hashedPassword = bcrypt.hash(args.input.password, salt);
+            const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
+            const hashedPassword = bcrypt.hash(args.password, salt);
             const usuario = await UserModel.create({
-                identificacion: args.input.identificacion,
-                apellidos:args.input.apellidos,
-                correo:args.input.correo,
-                nombres:args.input.nombres,
-                rol:args.input.rol,
-                password: hashedPassword
+                identificacion: args.identificacion,
+                nombres: args.nombres,
+                apellidos: args.apellidos,
+                correo: args.correo,
+                rol: args.rol,
+                password: hashedPassword,
             });
             return {
-                token: generateToken(usuario),
+                token: generateToken({
+                    _id: usuario._id,
+                    identificacion: usuario.identificacion,
+                    nombres: usuario.nombres,
+                    apellidos: usuario.apellidos,
+                    correo: usuario.correo,
+                    rol: usuario.rol,
+                }),
             };
         },
 
@@ -31,11 +37,18 @@ const resolversAuth = {
             if (!usuario || !isPasswordCorrect) {
                 throw new Error("Credenciales Incorrectas!");
             }
-            return {                
-                token: generateToken(usuario),
+            return {
+                token: generateToken({
+                    _id: usuario._id,
+                    identificacion: usuario.identificacion,
+                    nombres: usuario.nombres,
+                    apellidos: usuario.apellidos,
+                    correo: usuario.correo,
+                    rol: usuario.rol,
+                }),
             };
         },
     },
 };
 
-export {resolversAuth}
+export { resolversAuth };
