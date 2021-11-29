@@ -3,7 +3,7 @@ import { typeAvance } from '../models/avances/tiposAvance';
 import { tiposEnums } from '../models/enums/tipos';
 import { tiposProyecto } from '../models/proyectos/tipos';
 import { tiposUsuario } from '../models/usuarios/tipos';
-
+import { typeInscripcion } from '../models/inscripciones/tiposInscripcion';
 
 const tipoGobales = gql`
     scalar Date
@@ -11,4 +11,4 @@ const tipoGobales = gql`
        
 `;
 
-export const typeDefs  = [tipoGobales, tiposEnums, tiposProyecto, tiposUsuario, typeAvance]
+export const typeDefs  = [tipoGobales, tiposEnums, tiposProyecto, tiposUsuario, typeAvance, typeInscripcion]
