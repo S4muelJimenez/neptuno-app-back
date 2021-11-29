@@ -6,13 +6,13 @@ import {getToken} from '../../utils/tokenUtils';
 const resolversAuth = {
     Mutation: {
         Registro: async (parent, args, context) => {
-            const hashedPassword = bcrypt.hashSync(args.input.password);
+            const hashedPassword = bcrypt.hashSync(args.password);
             const usuario = await UserModel.create({
-                identificacion: args.input.identificacion,
-                apellidos:args.input.apellidos,
-                correo:args.input.correo,
-                nombres:args.input.nombres,
-                rol:args.input.rol,
+                identificacion: args.identificacion,
+                apellidos:args.apellidos,
+                correo:args.correo,
+                nombres:args.nombres,
+                rol:args.rol,
                 password: hashedPassword
             });
             return {
