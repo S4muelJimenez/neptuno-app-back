@@ -6,7 +6,9 @@ import {getToken} from '../../utils/tokenUtils';
 const resolversAuth = {
     Mutation: {
         Registro: async (parent, args, context) => {
-            const hashedPassword = bcrypt.hashSync(args.input.password);
+            
+            const salt = await bcrypt.genSalt(10) //Rondas de encriptacion            
+            const hashedPassword = bcrypt.hash(args.input.password, salt);
             const usuario = await UserModel.create({
                 identificacion: args.input.identificacion,
                 apellidos:args.input.apellidos,
