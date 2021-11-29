@@ -1,8 +1,9 @@
 import { gql } from "apollo-server-express";
 
 const tiposAuth = gql`
-    type AuthUser {
-        user: Usuario!
+
+    type Token {
+        error: String!
         token: String!
     }
 
@@ -29,7 +30,7 @@ const tiposAuth = gql`
             password: String!
             rol: Enum_RolUsario!
         
-        ): AuthUser!
+        ): Token!
 
         Ingreso(
             correo: String!, 

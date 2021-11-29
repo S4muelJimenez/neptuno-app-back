@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../usuarios/users";
-import {getToken} from '../../utils/tokenUtils';
+import {generateToken} from '../../utils/tokenUtils';
 // import {getToken} from '../../index';
 
 const resolversAuth = {
@@ -18,8 +18,7 @@ const resolversAuth = {
                 password: hashedPassword
             });
             return {
-                user: usuario,
-                token: getToken(usuario),
+                token: generateToken(usuario),
             };
         },
 
@@ -32,9 +31,8 @@ const resolversAuth = {
             if (!usuario || !isPasswordCorrect) {
                 throw new Error("Credenciales Incorrectas!");
             }
-            return {
-                user: usuario,
-                token: getToken(usuario),
+            return {                
+                token: generateToken(usuario),
             };
         },
     },
