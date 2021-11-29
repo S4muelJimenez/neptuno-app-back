@@ -10,9 +10,9 @@ const getToken = (usuario) =>
     jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, { expiresIn: "30 days" });
 
 const getUserFromToken = async (token) => {
-    // if (!token) { //Esta linea se uso debido a que no habia ningun token generado. No es necesaria si el registro se hace correctamente para el primer usuario con hashedPassword (En caso contrario, puede usarse para eliminar la restriccion del token)
-    //     return null;
-    // }
+    if (!token) { //Esta linea se uso debido a que no habia ningun token generado. No es necesaria si el registro se hace correctamente para el primer usuario con hashedPassword (En caso contrario, puede usarse para eliminar la restriccion del token)
+        return null;
+    }
     const tokenData = jwt.verify(token, process.env.JWT_SECRET);
     if (!tokenData?.id) {
         return null;
