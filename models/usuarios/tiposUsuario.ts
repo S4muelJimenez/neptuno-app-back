@@ -22,10 +22,11 @@ const tiposUsuario = gql`
             nombres: String!
             apellidos: String!
             correo: String!
-            rol: Enum_RolUsario!
-        ): #Los campos estado e _id tienen valores por defecto. No son obligatorios
+            rol: Enum_RolUsario!        
         #El campo _id no es obligatorio al crear porque lo asigna mongoDB.
-        Usuario
+        #Los campos estado, rol e _id tienen valores por defecto. No son obligatorios
+        ): Usuario
+        
 
         eliminarUsuario(
             _id: ID!

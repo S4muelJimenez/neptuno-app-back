@@ -30,7 +30,6 @@ const progressSchema = new Schema<Progress>({
         require: true,
         ref: ProjectModel,
     },
-    
 
 })
 

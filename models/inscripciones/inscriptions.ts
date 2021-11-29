@@ -1,17 +1,17 @@
 import { Schema, model } from 'mongoose';
-import { UserModel } from '../usuarios/users';
+
 import { ProjectModel } from '../proyectos/projects';
 import { Enum_EstadoInscripcion } from '../enums/enums';
 
-interface Applications {
+interface Inscripciones { //Falta el estudiante en el  esquema (ver UML)
     estado: Enum_EstadoInscripcion;
     fechaIngreso: Date;
     fechaEgreso: Date;
     proyecto: Schema.Types.ObjectId;
-    estudiante: Schema.Types.ObjectId;
+    
 }
 
-const applicationSchema = new Schema<Applications>({
+const InscripcionSchema = new Schema<Inscripciones>({
     estado: {
         type: String,
         enum: Enum_EstadoInscripcion,
@@ -25,11 +25,7 @@ const applicationSchema = new Schema<Applications>({
         type: Date,
         default: null
     },
-    estudiante: {
-        type: Schema.Types.ObjectId,
-        ref: UserModel,
-        required: true,
-    },
+
     proyecto: {
         type: Schema.Types.ObjectId,
         ref: ProjectModel,
@@ -38,6 +34,6 @@ const applicationSchema = new Schema<Applications>({
 
 })
 
-const ApplicationModel = model('Application', applicationSchema, 'inscripciones')
+const InscripcionesModel = model('Inscripciones', InscripcionSchema, 'inscripciones')
 
-export { ApplicationModel }
+export { InscripcionesModel }

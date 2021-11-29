@@ -9,23 +9,31 @@ const typeAvance = gql`
         proyecto: Proyecto!
     }
 
-    input datosAvance{
-        _id: ID!,
-        descripcion:String!
-        estudiante: ID!
-        fechaAvance: Date!
-        proyecto: ID!
-    }
 
     type Query{
-        Avance(_id:ID): [Avance]
+        arrayAvance: [Avance]
+        avanceSimple(_id:ID):Avance
     }
 
 
     type Mutation{
-        crearAvance(_id:ID!, campos: datosAvance!):Avance
-    }
+        crearAvance(
+            descripcion:String!
+            estudiante: ID!
+            fechaAvance: Date!
+            proyecto: ID!
+        ):Avance
+    
+        editarAvance(
+            _id: ID!,
+            descripcion:String!
+            estudiante: ID!
+            fechaAvance: Date!
+            proyecto: ID!
+        ):Avance
 
+        eliminarAvance(_id:String, correo: String):Avance
+    }
 `;
 
 
