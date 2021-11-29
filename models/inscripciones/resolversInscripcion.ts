@@ -1,22 +1,22 @@
 import { UserModel } from "../usuarios/users";
-import { ApplicationModel } from "./inscriptions";
+import { InscripcionesModel } from "./inscriptions";
 
 
 const resolversIncripcion = {
     Query: {
         leerInscripciones: async (parent, args) => {
-            const Inscripciones = await ApplicationModel.find();
+            const Inscripciones = await InscripcionesModel.find();
             return Inscripciones;
         },
         leerInscripcion: async (parent, args) => {
-            const Inscripcion = await ApplicationModel.findOne({ _id: args._id });
+            const Inscripcion = await InscripcionesModel.findOne({ _id: args._id });
             return Inscripcion;
         }
     },
 
     Mutation: {
         crearInscripcion: async (parent, args) => {
-            const inscripcionCreada = await ApplicationModel.create({
+            const inscripcionCreada = await InscripcionesModel.create({
                 proyecto: args.proyecto,
                 estudiante: args.estudiante,
                 estado: args.estado,
@@ -28,7 +28,7 @@ const resolversIncripcion = {
         },
 
         editarInscripcion: async (parent, args) => {
-            const inscripcionEditada = await ApplicationModel.findByIdAndUpdate(args._id, {
+            const inscripcionEditada = await InscripcionesModel.findByIdAndUpdate(args._id, {
                 proyecto: args.proyecto,
                 estudiante: args.estudiante,
                 estado: args.estado,
@@ -41,10 +41,10 @@ const resolversIncripcion = {
         eliminarInscripcion: async (parent, args) => {
 
             if (Object.keys(args).includes(`_id`)) {
-                const inscripcionEliminada = ApplicationModel.findOneAndDelete({ _id: args._id });
+                const inscripcionEliminada = InscripcionesModel.findOneAndDelete({ _id: args._id });
                 return inscripcionEliminada;
             } else if (Object.keys(args).includes(`proyecto`)) {
-                const inscripcionEliminada = ApplicationModel.findOneAndDelete({ proyecto: args.proyecto });
+                const inscripcionEliminada = InscripcionesModel.findOneAndDelete({proyecto: args.proyecto});
                 return inscripcionEliminada;
             }
 

@@ -38,6 +38,6 @@ const applicationSchema = new Schema<Applications>({
 
 })
 
-const ApplicationModel = model('Application', applicationSchema, 'inscripciones')
+const InscripcionesModel = model('Application', applicationSchema, 'inscripciones')
 
-export { ApplicationModel }
+export { InscripcionesModel }
