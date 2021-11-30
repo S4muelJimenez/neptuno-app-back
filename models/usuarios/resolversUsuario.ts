@@ -10,6 +10,8 @@ const resolversUsuario = {
         leerUsuario: async (parent, args) => {
             if (Object.keys(args).includes("_id")) {
                 const usuario = await UserModel.findOne({ _id: args._id })
+                console.log(usuario);
+                
                 return usuario
             } else if (Object.keys(args).includes("correo")) {
                 const usuario = await UserModel.findOne({ correo: args.correo })
@@ -25,8 +27,8 @@ const resolversUsuario = {
     Mutation: {
         crearUsuario: async (paren, args) => {
             const usuarioCreado = await UserModel.create({
-                nombre: args.nombre,
-                apellido: args.apellido,
+                nombres: args.nombres,
+                apellidos: args.apellidos,
                 identificacion: args.identificacion,
                 correo: args.correo,
                 rol: args.rol,
@@ -55,8 +57,8 @@ const resolversUsuario = {
         editarUsuario: async (parent, args) => {
             const usuarioEditado = await UserModel.findByIdAndUpdate(args._id,
                 {
-                    nombre: args.nombre,
-                    apellido: args.apellido,
+                    nombres: args.nombres,
+                    apellidos: args.apellidos,
                     identificacion: args.identificacion,
                     correo: args.correo,
                     rol: args.rol,
