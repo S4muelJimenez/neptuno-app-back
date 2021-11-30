@@ -64,7 +64,9 @@ const tiposProyecto = gql`
         eliminarProyecto(
             _id: ID!                    
         ): Proyecto
-    }
+    },
+
+    
 
     #Falta incluir los avances y las inscripciones para ser mostradas al buscar un proyecto.
 `;

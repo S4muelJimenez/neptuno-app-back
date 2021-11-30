@@ -6,7 +6,8 @@ const resolversProyecto = {
         leerProyectos: async (parent, args) => {
             const proyectos = await ProjectModel.find()
                 .populate("lider")
-                .populate("objetivos");
+                .populate("objetivos")
+                .populate("avanceSimple");
             return proyectos;
         },
 

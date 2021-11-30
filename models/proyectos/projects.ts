@@ -76,7 +76,7 @@ projectSchema.virtual("inscripciones", {
     foreignField: "proyecto",
 });
 
-projectSchema.virtual("avances", {
+projectSchema.virtual("avanceSimple", {
     ref: "Progress",
     localField: "_id",
     foreignField: "proyecto",
