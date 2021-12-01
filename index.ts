@@ -32,14 +32,31 @@ import { resolvers } from "./graphql/resolvers";
 
 import { validateToken } from "./utils/tokenUtils";
 
+const getUserData = (token) => {
+    const verification = validateToken(token);
+    if (verification.data) {
+        return verification.data;
+    } else {
+        return null;
+    }
+};
+
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
-    context: async () => {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYTMwMzQ0NTliMDAxOGVmN2I5NjIwYiIsImlhdCI6MTYzODEzODQwNiwiZXhwIjoxNjQwNzMwNDA2fQ.7PyI6rPH8S1nOP6PSrEf1svuqqixAbzaUmOuelWNucw"
-        validateToken(token)
+    context: async ({ req }) => {
+        const token = req.headers?.authorization ?? null; //Operador Nullish coalescing (??): retorna el valor de la derecha si el valor de la izquierda es null/undefined; de lo contrario, retorna el valor de la izquierda
+        //obtener el token desde la variable req
+        if (token) {
+            console.log("Token desde el frontend", req.headers.authorization);
+            const userData = getUserData(req.headers.authorization);
+            if (userData) {
+                return { userData };//Si el token es Verdadero, tome la informacion del token (la cual incluye la info del usuario, incluyendo su Rol) y pongala en el contexto del server para que pueda ser usada por cualquier resolver
+            }
+        }
+        //return null;
     },
 });
 

@@ -10,16 +10,16 @@ const validateToken = (token) => {
     if (token){
         const verificacion = jwt.verify(token, process.env.JWT_SECRET, (err,data)=>{
             if(data){                               
-                return {data:data}
+                return {data:data,}
             }
-            else if (err){                
-                return {errpr:err}
+            else if (err){
+                return {error:err,}
             }
         });
         console.log('Verificacion', verificacion)
+        return verificacion
     }
 }
-
 
 const generateToken = (payload) =>
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30 days" });

@@ -2,8 +2,8 @@ import { gql } from "apollo-server-express";
 
 const tiposAuth = gql`
     type Token {
-        error: String!
-        token: String!
+        error: String
+        token: String
     }
 
     #input SignUp {
@@ -32,7 +32,7 @@ const tiposAuth = gql`
 
         Ingreso(correo: String!, password: String!): Token!
 
-        validarToken(token: String!): Token
+        refrescarToken: Token
     }
 `;
 

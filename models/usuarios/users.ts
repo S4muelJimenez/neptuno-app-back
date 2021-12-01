@@ -10,7 +10,7 @@ interface User {
     apellidos: string;
     rol: Enum_RolUsario;
     estado: Enum_EstadoUsuario;
-    password: any
+    password: string;
 }
 
 
