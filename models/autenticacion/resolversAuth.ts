@@ -34,10 +34,6 @@ const resolversAuth = {
                 args.password,
                 usuario.password
             );
-            console.log('Usuario login: ', usuario);
-            
-            console.log('Contraseña correcta?: ', isPasswordCorrect);
-            
             if (usuario && isPasswordCorrect) {
                 return {
                     token: generateToken({
@@ -60,10 +56,8 @@ const resolversAuth = {
                 return {
                     error: "Token no valido",
                 };
-            } else {//Si el con
-                console.log(
-                    "userData es verdadero, lo que significa que el token es válido y no ha expirado"
-                );
+            } else {
+                //Si el context tiene userData, genera (refresca) un nuevo token para la sesion
                 return {
                     token: generateToken({
                         _id: context.userData._id,

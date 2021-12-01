@@ -46,17 +46,17 @@ const getUserData = (token) => {
 const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
-    context: async ({ req }) => {
+    context: ({ req }) => {
         const token = req.headers?.authorization ?? null; //Operador Nullish coalescing (??): retorna el valor de la derecha si el valor de la izquierda es null/undefined; de lo contrario, retorna el valor de la izquierda
         //obtener el token desde la variable req
         if (token) {
             console.log("Token desde el frontend", req.headers.authorization);
             const userData = getUserData(req.headers.authorization);
             if (userData) {
-                return { userData };//Si el token es Verdadero, tome la informacion del token (la cual incluye la info del usuario, incluyendo su Rol) y pongala en el contexto del server para que pueda ser usada por cualquier resolver
+                return { userData }; //Si el token es Verdadero, tome la informacion del token (la cual incluye la info del usuario, incluyendo su Rol) y pongala en el contexto del server para que pueda ser usada por cualquier resolver
             }
         }
-        //return null;
+        return null;
     },
 });
 
