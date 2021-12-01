@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FervKa/Neptuno-App.git"
+    "url": "git+https://github.com/S4muelJimenez/neptuno-app-back.git"
   },
   "author": "Nightmare",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/FervKa/Neptuno-App/issues"
+    "url": "https://github.com/S4muelJimenez/neptuno-app-back/issues"
   },
-  "homepage": "https://github.com/FervKa/Neptuno-App#readme",
+  "homepage": "https://github.com/S4muelJimenez/neptuno-app-back#readme",
   "dependencies": {
     "apollo-server-express": "^3.5.0",
     "cors": "^2.8.5",
@@ -24,8 +24,10 @@
     "express": "^4.17.1",
     "graphql": "^16.0.1",
     "mongoose": "^6.0.12",
-    "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
