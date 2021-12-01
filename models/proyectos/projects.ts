@@ -64,10 +64,13 @@ const projectSchema = new Schema<Project>(
     }
 );
 
+/*  */
+
 projectSchema.virtual("objetivos", {
     ref: "Objetivo",
-    localField: "_id",
     foreignField: "proyecto",
+    localField: "_id",  
+    count:true,
 });
 
 projectSchema.virtual("inscripciones", {
@@ -76,7 +79,7 @@ projectSchema.virtual("inscripciones", {
     foreignField: "proyecto",
 });
 
-projectSchema.virtual("avanceSimple", {
+projectSchema.virtual("avances", {
     ref: "Progress",
     localField: "_id",
     foreignField: "proyecto",
