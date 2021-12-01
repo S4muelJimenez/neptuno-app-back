@@ -51,7 +51,7 @@ const resolversProyecto = {
                 presupuesto: args.presupuesto,
                 fechaInicio: args.fechaInicio,
                 fechaTerminacion: args.fechaTerminacion,
-                lider: args.usuario,
+                lider: args.lider,
             });
             if (Object.keys(args).includes("estado")){
                 proyecto.estado=args.estado
@@ -59,7 +59,7 @@ const resolversProyecto = {
             if (Object.keys(args).includes("fase")){
                 proyecto.fase=args.fase
             }
-            return proyecto;
+            return proyecto.populate('lider');
         },
         crearObjetivo: async (parent, args) => {
             const objetivo = await ObjectiveModel.create({
