@@ -33,12 +33,14 @@ const resolversProyecto = {
                 const objetivos = await ObjectiveModel.find({
                     proyecto: args.proyecto,
                 });
-                objetivos.forEach((objetivo, indice)=>{
-                    objetivo['index']=indice
-                })                ;
+                objetivos.forEach((objetivo, indice) => {
+                    objetivo["index"] = indice;
+                });
                 return objetivos;
             } else if (Object.keys(args).includes("_id")) {
-                const objetivos = await ObjectiveModel.findOne({ _id: args._id });
+                const objetivos = await ObjectiveModel.findOne({
+                    _id: args._id,
+                });
                 return objetivos;
             }
         },
@@ -53,37 +55,58 @@ const resolversProyecto = {
                 fechaTerminacion: args.fechaTerminacion,
                 lider: args.lider,
             });
-            if (Object.keys(args).includes("estado")){
-                proyecto.estado=args.estado
+            if (Object.keys(args).includes("estado")) {
+                proyecto.estado = args.estado;
             }
-            if (Object.keys(args).includes("fase")){
-                proyecto.fase=args.fase
+            if (Object.keys(args).includes("fase")) {
+                proyecto.fase = args.fase;
             }
-            return proyecto.populate('lider');
+            return proyecto.populate("lider");
         },
         crearObjetivo: async (parent, args) => {
-            const objetivo = await ObjectiveModel.create({
+            const objetivo =await ObjectiveModel.create({
                 descripcion: args.descripcion,
                 tipo: args.tipo,
                 proyecto: args.proyecto,
             });
-            return objetivo;
+            const proyecto = await ProjectModel.findById({
+                _id: args.proyecto,
+            });
+            return proyecto.populate("objetivos");
         },
 
         editarProyecto: async (parent, args) => {
-            const proyecto = await ProjectModel.findByIdAndUpdate(
-                { _id: args._id },
-                {
-                    nombre: args.nombre,
-                    presupuesto: args.presupuesto,
-                    fechaInicio: args.fechaInicio,
-                    fechaTerminacion: args.fechaTerminacion,
-                    estado: args.estado,
-                    fase: args.fase,
-                    lider: args.lider,
-                },
-                { new: true }
-            );
+            if (Object.keys(args).includes(`_id`)) {
+                const proyecto = await ProjectModel.findByIdAndUpdate(
+                    { _id: args._id },
+                    {
+                        nombre: args.nombre,
+                        presupuesto: args.presupuesto,
+                        fechaInicio: args.fechaInicio,
+                        fechaTerminacion: args.fechaTerminacion,
+                        estado: args.estado,
+                        fase: args.fase,
+                        lider: args.lider,
+                    },
+                    { new: true }
+                );
+                return proyecto.populate("lider");
+            } else if (Object.keys(args).includes("nombre")) {
+                const proyecto = await ProjectModel.findByIdAndUpdate(
+                    { _id: args._id },
+                    {
+                        nombre: args.nombre,
+                        presupuesto: args.presupuesto,
+                        fechaInicio: args.fechaInicio,
+                        fechaTerminacion: args.fechaTerminacion,
+                        estado: args.estado,
+                        fase: args.fase,
+                        lider: args.lider,
+                    },
+                    { new: true }
+                );
+                return proyecto.populate("lider");
+            }
         },
 
         editarObjetivos: async (parent, args) => {
