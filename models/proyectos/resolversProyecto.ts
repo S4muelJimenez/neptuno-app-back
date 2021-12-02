@@ -6,6 +6,7 @@ const resolversProyecto = {
         leerProyectos: async (parent, args) => {
             const proyectos = await ProjectModel.find()
                 .populate("objetivos")
+                .populate('lider')
                 .populate("avances");
             return proyectos;
         },
@@ -71,8 +72,8 @@ const resolversProyecto = {
             });
             const proyecto = await ProjectModel.findById({
                 _id: args.proyecto,
-            });
-            return proyecto.populate("objetivos");
+            }).populate('lider').populate('objetivos')
+            return  proyecto
         },
 
         editarProyecto: async (parent, args) => {
