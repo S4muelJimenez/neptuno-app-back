@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import { UserModel } from "../usuarios/users";
-import { ProgressModel } from "./progress";
-
-=======
 import { ProjectModel } from "../proyectos/projects";
 import { UserModel } from "../usuarios/users";
 import { ProgressModel } from "./progress";
 
 
->>>>>>> graphql-JV
 const resolversAvances = {
     Query: {
         arrayAvance: async (parent, args) => {
@@ -23,15 +17,6 @@ const resolversAvances = {
 
     Mutation: {
         crearAvance: async (parent, args) => {
-<<<<<<< HEAD
-            const avanceCreado = await ProgressModel.create({
-                descripcion: args.descripcion,
-                estudiante: args.estudiante,
-                fechaAvance: args.fechaAvance,
-                proyecto: args.proyecto,
-            });
-            return avanceCreado;
-=======
             
             const avanceCreado = await ProgressModel.create({
                 descripcion: args.descripcion,
@@ -47,7 +32,6 @@ const resolversAvances = {
             .populate("objetivos");
             
             return proyectoTraido;
->>>>>>> graphql-JV
 
         },
 

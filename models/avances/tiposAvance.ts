@@ -10,10 +10,6 @@ const typeAvance = gql`
     }
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> graphql-JV
     type Query{
         arrayAvance: [Avance]
         avanceSimple(_id:ID):Avance
@@ -24,15 +20,9 @@ const typeAvance = gql`
         crearAvance(
             descripcion:String!
             estudiante: ID!
-<<<<<<< HEAD
-            fechaAvance: Date!
-            proyecto: ID!
-        ):Avance
-=======
             fechaAvance: Date
             proyecto: ID!
         ):Proyecto #Corregir return del resolver
->>>>>>> graphql-JV
     
         editarAvance(
             _id: ID!,
@@ -40,15 +30,9 @@ const typeAvance = gql`
             estudiante: ID!
             fechaAvance: Date!
             proyecto: ID!
-<<<<<<< HEAD
-        ):Avance
-
-        eliminarAvance(_id:String, correo: String):Avance
-=======
         ):Proyecto #Corregir return del resolver
 
         eliminarAvance(_id:String, correo: String):Proyecto #Corregir return del resolver
->>>>>>> graphql-JV
     }
 `;
 

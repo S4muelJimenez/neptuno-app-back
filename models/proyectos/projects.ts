@@ -69,20 +69,11 @@ const projectSchema = new Schema<Project>(
 projectSchema.virtual("objetivos", {
     ref: "Objetivo",
     foreignField: "proyecto",
-<<<<<<< HEAD
-    localField: "_id",  
-    count:true,
-});
-
-projectSchema.virtual("inscripciones", {
-    ref: "Application",
-=======
     localField: "_id",
 });
 
 projectSchema.virtual("inscripciones", {
     ref: "Inscripciones",
->>>>>>> graphql-JV
     localField: "_id",
     foreignField: "proyecto",
 });

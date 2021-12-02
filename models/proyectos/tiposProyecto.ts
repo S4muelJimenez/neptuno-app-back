@@ -3,11 +3,7 @@ import { gql } from "apollo-server-express";
 const tiposProyecto = gql`
     type Objetivo {
         _id: ID!
-<<<<<<< HEAD
-        index: Int!
-=======
         #index: Int!
->>>>>>> graphql-JV
         descripcion: String!
         tipo: Enum_TipoObjetivo!
         proyecto: Proyecto!
@@ -22,11 +18,7 @@ const tiposProyecto = gql`
         objetivos: [Objetivo!]!
         lider: Usuario!
         fase: Enum_FaseProyecto!
-<<<<<<< HEAD
-        #inscripciones:[Inscripcion]!
-=======
         inscripciones:[Inscripcion]!
->>>>>>> graphql-JV
         avances: [Avance]!
         estado: Enum_EstadoProyecto!
         
@@ -53,17 +45,7 @@ const tiposProyecto = gql`
 
         editarProyecto(
             _id: ID!
-<<<<<<< HEAD
-            nombre: String
-            presupuesto: Float
-            fechaInicio: Date
-            fechaTerminacion: Date
-            lider: ID
-            fase: Enum_FaseProyecto
-            estado: Enum_EstadoProyecto
-=======
             nombre: String            
->>>>>>> graphql-JV
         ): Proyecto
 
         editarObjetivos(
@@ -71,11 +53,7 @@ const tiposProyecto = gql`
             index:Int!
             descripcion: String
             tipo:Enum_TipoObjetivo
-<<<<<<< HEAD
-        ):[Objetivo]
-=======
         ):Proyecto
->>>>>>> graphql-JV
 
         eliminarProyecto(
             _id: ID!                    
