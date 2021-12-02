@@ -10,6 +10,7 @@ const typeAvance = gql`
     }
 
 
+
     type Query{
         arrayAvance: [Avance]
         avanceSimple(_id:ID):Avance
@@ -22,7 +23,7 @@ const typeAvance = gql`
             estudiante: ID!
             fechaAvance: Date!
             proyecto: ID!
-        ):Avance
+        ):Proyecto
     
         editarAvance(
             _id: ID!,
