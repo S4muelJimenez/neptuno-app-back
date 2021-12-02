@@ -1,18 +1,19 @@
 import { gql } from "apollo-server-express";
 
-const typeInscripcion = gql`
+const tiposInscripcion = gql`
     type Inscripcion{#Falta el campo estudiante
-        _id: ID!,
+        _id: ID!
         proyecto: Proyecto!
-        estado: Enum_EstadoInscripcion!
+        estudiante: Usuario!
         fechaIngreso: Date!
-        fechaEgreso: Date!      
+        fechaEgreso: Date!
+        estado: Enum_EstadoInscripcion!
     }
 
 
     type Query{
         leerInscripciones: [Inscripcion]
-        leerInscripcion(_id:ID):Inscripcion
+        leerInscripcion(_id:ID!):Inscripcion
     }
 
 
@@ -20,21 +21,23 @@ const typeInscripcion = gql`
         crearInscripcion(
             proyecto: ID!
             #estado: Enum_EstadoInscripcion! #El estado por defecto debe ser "PENDIENTE". El Estudiante que crea la inscripcion no debe poder aprobar el estado
-            fechaIngreso: Date!
-            fechaEgreso: Date!   
-        ):Inscripcion
+            fechaIngreso: Date
+            fechaEgreso: Date
+            estudiante: ID!
+        ):Proyecto
     
         editarInscripcion(
             _id: ID!,
             proyecto: ID
+            estudiante: ID
             estado: Enum_EstadoInscripcion
             fechaIngreso: Date
             fechaEgreso: Date
-        ):Inscripcion
+        ):Proyecto
 
-        eliminarInscripcion(_id:String, proyecto: ID!):Inscripcion
+        eliminarInscripcion(_id:String, proyecto: ID!):Proyecto
     }
 `;
 
 
-export { typeInscripcion };
+export { tiposInscripcion };

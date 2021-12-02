@@ -1,7 +1,8 @@
+import { ProjectModel } from "../proyectos/projects";
 import { InscripcionesModel } from "./inscriptions";
 
 
-const resolversIncripcion = {
+const resolversInscripcion = {
     Query: {
         leerInscripciones: async (parent, args) => {
             const Inscripciones = await InscripcionesModel.find();
@@ -19,10 +20,16 @@ const resolversIncripcion = {
                 proyecto: args.proyecto,
                 estudiante: args.estudiante,
                 //estado: args.estado, //El estado solo es modificado por el Lider del proyecto
-                fechaIngreso: args.fechaIngreso,//Aqui deberia ser date.now()
+                fechaIngreso: Date.now(),//Aqui deberia ser date.now()
                 fechaEgreso: args.fechaEgreso,
             });
-            return inscripcionCreada;
+            const proyecto = await ProjectModel.findById({
+                _id:args.proyecto
+            }).populate('lider')
+            .populate('objetivos')
+            .populate('avances')
+            .populate('inscripciones')
+            return proyecto;
 
         },
 
@@ -50,4 +57,4 @@ const resolversIncripcion = {
     },
 }
 
-export { resolversIncripcion };
+export { resolversInscripcion };
