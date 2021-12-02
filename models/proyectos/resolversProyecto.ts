@@ -33,9 +33,9 @@ const resolversProyecto = {
                 const objetivos = await ObjectiveModel.find({
                     proyecto: args.proyecto,
                 });
-                objetivos.forEach((objetivo, indice) => {
+                /* objetivos.forEach((objetivo, indice) => {
                     objetivo["index"] = indice;
-                });
+                }); */
                 return objetivos;
             } else if (Object.keys(args).includes("_id")) {
                 const objetivos = await ObjectiveModel.findOne({
@@ -71,8 +71,9 @@ const resolversProyecto = {
             });
             const proyecto = await ProjectModel.findById({
                 _id: args.proyecto,
-            });
-            return proyecto.populate("objetivos");
+            }).populate("lider");
+            const variablev_v = await proyecto.populate("objetivos");
+            return variablev_v;
         },
 
         editarProyecto: async (parent, args) => {

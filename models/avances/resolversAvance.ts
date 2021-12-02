@@ -1,5 +1,7 @@
+import { ProjectModel } from "../proyectos/projects";
 import { UserModel } from "../usuarios/users";
 import { ProgressModel } from "./progress";
+
 
 const resolversAvances = {
     Query: {
@@ -15,13 +17,21 @@ const resolversAvances = {
 
     Mutation: {
         crearAvance: async (parent, args) => {
+            
             const avanceCreado = await ProgressModel.create({
                 descripcion: args.descripcion,
                 estudiante: args.estudiante,
                 fechaAvance: args.fechaAvance,
                 proyecto: args.proyecto,
             });
-            return avanceCreado;
+
+            const proyectoTraido = await ProjectModel.find({
+                _id: args.proyecto
+            }).populate("avances")
+            .populate("lider")
+            .populate("objetivos");
+            
+            return proyectoTraido;
 
         },
 

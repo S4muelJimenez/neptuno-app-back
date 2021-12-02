@@ -70,7 +70,6 @@ projectSchema.virtual("objetivos", {
     ref: "Objetivo",
     foreignField: "proyecto",
     localField: "_id",  
-    count:true,
 });
 
 projectSchema.virtual("inscripciones", {
