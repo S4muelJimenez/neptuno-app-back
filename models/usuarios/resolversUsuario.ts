@@ -63,16 +63,31 @@ const resolversUsuario = {
                 return usuarioEliminado;
             }
         },
-        editarUsuario: async (parent, args) => {
-            const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
-                nombres: args.nombres,
-                apellidos: args.apellidos,
-                identificacion: args.identificacion,
-                correo: args.correo,
-                rol: args.rol,
-                estado: args.estado,
-            });
-            return usuarioEditado;
+        editarUsuario: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
+                    nombres: args.nombres,
+                    apellidos: args.apellidos,
+                    identificacion: args.identificacion,
+                    correo: args.correo,
+                    rol: args.rol,
+                    estado: args.estado,
+                });
+                return usuarioEditado;
+            }else if(context.userData.rol==="LIDER"){
+                if(!(args.estado==="NO AUTORIZADO")){
+                    const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
+                        nombres: args.nombres,
+                        apellidos: args.apellidos,
+                        identificacion: args.identificacion,
+                        correo: args.correo,
+                        rol: args.rol,
+                        estado: args.estado,
+                    });
+                    return usuarioEditado;
+                }
+            }
+            return null
         },
     },
 };
