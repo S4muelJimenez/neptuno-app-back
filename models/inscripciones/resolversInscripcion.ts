@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import { InscripcionesModel } from "./inscriptions";
 
 
 const resolversIncripcion = {
+=======
+import { ProjectModel } from "../proyectos/projects";
+import { InscripcionesModel } from "./inscriptions";
+
+
+const resolversInscripcion = {
+>>>>>>> graphql-JV
     Query: {
         leerInscripciones: async (parent, args) => {
             const Inscripciones = await InscripcionesModel.find();
@@ -19,10 +27,23 @@ const resolversIncripcion = {
                 proyecto: args.proyecto,
                 estudiante: args.estudiante,
                 //estado: args.estado, //El estado solo es modificado por el Lider del proyecto
+<<<<<<< HEAD
                 fechaIngreso: args.fechaIngreso,//Aqui deberia ser date.now()
                 fechaEgreso: args.fechaEgreso,
             });
             return inscripcionCreada;
+=======
+                fechaIngreso: Date.now(),//Aqui deberia ser date.now()
+                fechaEgreso: args.fechaEgreso,
+            });
+            const proyecto = await ProjectModel.findById({
+                _id:args.proyecto
+            }).populate('lider')
+            .populate('objetivos')
+            .populate('avances')
+            .populate('inscripciones')
+            return proyecto;
+>>>>>>> graphql-JV
 
         },
 
@@ -50,4 +71,8 @@ const resolversIncripcion = {
     },
 }
 
+<<<<<<< HEAD
 export { resolversIncripcion };
+=======
+export { resolversInscripcion };
+>>>>>>> graphql-JV
