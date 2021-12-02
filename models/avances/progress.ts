@@ -24,6 +24,7 @@ const progressSchema = new Schema<Progress>({
     fechaAvance: {
         type: Date,
         require: true,
+        unique: true,
     },
     proyecto: {
         type: Schema.Types.ObjectId,

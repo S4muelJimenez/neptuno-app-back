@@ -21,11 +21,11 @@ const resolversAvances = {
             const avanceCreado = await ProgressModel.create({
                 descripcion: args.descripcion,
                 estudiante: args.estudiante,
-                fechaAvance: args.fechaAvance,
+                fechaAvance: Date.now(),
                 proyecto: args.proyecto,
             });
 
-            const proyectoTraido = await ProjectModel.find({
+            const proyectoTraido = await ProjectModel.findById({
                 _id: args.proyecto
             }).populate("avances")
             .populate("lider")

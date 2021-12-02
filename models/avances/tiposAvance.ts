@@ -21,9 +21,9 @@ const typeAvance = gql`
         crearAvance(
             descripcion:String!
             estudiante: ID!
-            fechaAvance: Date!
+            fechaAvance: Date
             proyecto: ID!
-        ):Proyecto
+        ):Proyecto #Corregir return del resolver
     
         editarAvance(
             _id: ID!,
@@ -31,9 +31,9 @@ const typeAvance = gql`
             estudiante: ID!
             fechaAvance: Date!
             proyecto: ID!
-        ):Avance
+        ):Proyecto #Corregir return del resolver
 
-        eliminarAvance(_id:String, correo: String):Avance
+        eliminarAvance(_id:String, correo: String):Proyecto #Corregir return del resolver
     }
 `;
 
