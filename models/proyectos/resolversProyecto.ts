@@ -6,6 +6,10 @@ const resolversProyecto = {
         leerProyectos: async (parent, args) => {
             const proyectos = await ProjectModel.find()
                 .populate("objetivos")
+<<<<<<< HEAD
+=======
+                .populate('lider')
+>>>>>>> graphql-JV
                 .populate("avances");
             return proyectos;
         },
@@ -33,12 +37,23 @@ const resolversProyecto = {
                 const objetivos = await ObjectiveModel.find({
                     proyecto: args.proyecto,
                 });
+<<<<<<< HEAD
                 objetivos.forEach((objetivo, indice)=>{
                     objetivo['index']=indice
                 })                ;
                 return objetivos;
             } else if (Object.keys(args).includes("_id")) {
                 const objetivos = await ObjectiveModel.findOne({ _id: args._id });
+=======
+                /* objetivos.forEach((objetivo, indice) => {
+                    objetivo["index"] = indice;
+                }); */
+                return objetivos;
+            } else if (Object.keys(args).includes("_id")) {
+                const objetivos = await ObjectiveModel.findOne({
+                    _id: args._id,
+                });
+>>>>>>> graphql-JV
                 return objetivos;
             }
         },
@@ -51,6 +66,7 @@ const resolversProyecto = {
                 presupuesto: args.presupuesto,
                 fechaInicio: args.fechaInicio,
                 fechaTerminacion: args.fechaTerminacion,
+<<<<<<< HEAD
                 lider: args.usuario,
             });
             if (Object.keys(args).includes("estado")){
@@ -63,10 +79,25 @@ const resolversProyecto = {
         },
         crearObjetivo: async (parent, args) => {
             const objetivo = await ObjectiveModel.create({
+=======
+                lider: args.lider,
+            });
+            if (Object.keys(args).includes("estado")) {
+                proyecto.estado = args.estado;
+            }
+            if (Object.keys(args).includes("fase")) {
+                proyecto.fase = args.fase;
+            }
+            return proyecto.populate("lider");
+        },
+        crearObjetivo: async (parent, args) => {
+            const objetivo =await ObjectiveModel.create({
+>>>>>>> graphql-JV
                 descripcion: args.descripcion,
                 tipo: args.tipo,
                 proyecto: args.proyecto,
             });
+<<<<<<< HEAD
             return objetivo;
         },
 
@@ -84,6 +115,46 @@ const resolversProyecto = {
                 },
                 { new: true }
             );
+=======
+            const proyecto = await ProjectModel.findById({
+                _id: args.proyecto,
+            }).populate('lider').populate('objetivos')
+            return  proyecto
+        },
+
+        editarProyecto: async (parent, args) => {
+            if (Object.keys(args).includes(`_id`)) {
+                const proyecto = await ProjectModel.findByIdAndUpdate(
+                    { _id: args._id },
+                    {
+                        nombre: args.nombre,
+                        presupuesto: args.presupuesto,
+                        fechaInicio: args.fechaInicio,
+                        fechaTerminacion: args.fechaTerminacion,
+                        estado: args.estado,
+                        fase: args.fase,
+                        lider: args.lider,
+                    },
+                    { new: true }
+                );
+                return proyecto.populate("lider");
+            } else if (Object.keys(args).includes("nombre")) {
+                const proyecto = await ProjectModel.findByIdAndUpdate(
+                    { _id: args._id },
+                    {
+                        nombre: args.nombre,
+                        presupuesto: args.presupuesto,
+                        fechaInicio: args.fechaInicio,
+                        fechaTerminacion: args.fechaTerminacion,
+                        estado: args.estado,
+                        fase: args.fase,
+                        lider: args.lider,
+                    },
+                    { new: true }
+                );
+                return proyecto.populate("lider");
+            }
+>>>>>>> graphql-JV
         },
 
         editarObjetivos: async (parent, args) => {
