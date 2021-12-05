@@ -40,7 +40,7 @@ const resolversInscripcion = {
                 estado: args.estado,
                 fechaIngreso: args.fechaIngreso,
                 fechaEgreso: args.fechaEgreso,
-            });
+            },{new:true});
             return inscripcionEditada;
         },
 

@@ -24,7 +24,7 @@ const tiposInscripcion = gql`
             fechaIngreso: Date
             fechaEgreso: Date
             estudiante: ID!
-        ):Proyecto
+        ):Inscripcion
     
         editarInscripcion(
             _id: ID!,
@@ -33,7 +33,7 @@ const tiposInscripcion = gql`
             estado: Enum_EstadoInscripcion
             fechaIngreso: Date
             fechaEgreso: Date
-        ):Proyecto
+        ):Inscripcion
 
         eliminarInscripcion(_id:String, proyecto: ID!):Proyecto
     }

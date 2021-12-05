@@ -8,6 +8,7 @@ interface Progress {
     descripcion: string;
     estudiante: Schema.Types.ObjectId;
     proyecto: Schema.Types.ObjectId;
+
     // observacionLider: Schema.Types.ObjectId;
 }
 
@@ -33,6 +34,8 @@ const progressSchema = new Schema<Progress>({
     },
 
 })
+
+progressSchema.virtual("observacionesLider", {ref: "Observation", localField: "_id", foreignField: "avance"})
 
 const ProgressModel = model('Progress', progressSchema, 'avances')
 
