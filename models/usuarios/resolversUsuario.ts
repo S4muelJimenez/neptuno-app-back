@@ -68,7 +68,7 @@ const resolversUsuario = {
         editarPerfil: async (parent, args, context) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(args.password, salt);
-            
+
             const usuarioEditado = await UserModel.findByIdAndUpdate(context.userData._id, {
                 nombres: args.nombres,
                 apellidos: args.apellidos,
@@ -76,15 +76,30 @@ const resolversUsuario = {
                 correo: args.correo,
                 password: hashedPassword,
             },
-            { new: true }
+                { new: true }
             );
             return usuarioEditado;
-
-
-
-
-            
-
+        },
+        
+        editarUsuario: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
+                const hashedPassword = await bcrypt.hash(args.password, salt);
+                const usuarioEditado = await UserModel.findByIdAndUpdate(
+                    args._id,
+                    {
+                        nombres: args.nombres,
+                        apellidos: args.apellidos,
+                        identificacion: args.identificacion,
+                        correo: args.correo,
+                        rol: args.rol,
+                        estado: args.estado,
+                        password: hashedPassword
+                    }
+                );
+                return usuarioEditado;
+            }
+            return null;
         },
     },
 };

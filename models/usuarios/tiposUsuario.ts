@@ -39,6 +39,7 @@ const tiposUsuario = gql`
             identificacion: String
             nombres: String
             apellidos: String
+            password: String
             correo: String
             rol: Enum_RolUsario
             estado: Enum_EstadoUsuario
@@ -51,6 +52,7 @@ const tiposUsuario = gql`
             correo: String
             password: String
         ):Usuario
+        
     }
 `;
 
