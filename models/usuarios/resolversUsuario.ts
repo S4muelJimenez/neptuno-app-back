@@ -4,9 +4,13 @@ import { UserModel } from "./users";
 
 const resolversUsuario = {
     Query: {
-        leerUsuarios: async (parent, args) => {
-            const usuarios = await UserModel.find();
-            return usuarios;
+        leerUsuarios: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const usuarios = await UserModel.find();
+                return usuarios;
+            }else{
+                return null;
+            }
         },
         leerUsuario: async (parent, args) => {
             if (Object.keys(args).includes("_id")) {
@@ -80,7 +84,7 @@ const resolversUsuario = {
             );
             return usuarioEditado;
         },
-        
+
         editarUsuario: async (parent, args, context) => {
             if (context.userData.rol === "ADMINISTRADOR") {
                 const salt = await bcrypt.genSalt(10); //Rondas de encriptacion

@@ -29,23 +29,27 @@ const resolversAuth = {
         },
 
         Ingreso: async (parent, args, context) => {
-            const usuario = await UserModel.findOne({ correo: args.correo });
-            const isPasswordCorrect = await bcrypt.compare(
-                args.password,
-                usuario.password
-            );
-            if (usuario && isPasswordCorrect) {
-                return {
-                    token: generateToken({
-                        _id: usuario._id,
-                        identificacion: usuario.identificacion,
-                        nombres: usuario.nombres,
-                        apellidos: usuario.apellidos,
-                        correo: usuario.correo,
-                        rol: usuario.rol,
-                    }),
-                };
-                //throw new Error("Credenciales Incorrectas!");
+
+            if (context.userData.estado === "AUTORIZADO") {
+                const usuario = await UserModel.findOne({ correo: args.correo });
+                const isPasswordCorrect = await bcrypt.compare(
+                    args.password,
+                    usuario.password
+                );
+                if (usuario && isPasswordCorrect) {
+                    return {
+                        token: generateToken({
+                            _id: usuario._id,
+                            identificacion: usuario.identificacion,
+                            nombres: usuario.nombres,
+                            apellidos: usuario.apellidos,
+                            correo: usuario.correo,
+                            rol: usuario.rol,
+                        }),
+                    };
+                }
+            }else{
+                return null
             }
         },
 
