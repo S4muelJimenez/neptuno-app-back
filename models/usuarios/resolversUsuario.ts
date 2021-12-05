@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { UserModel } from "./users";
 
 const resolversUsuario = {
@@ -65,29 +66,23 @@ const resolversUsuario = {
         },
         editarUsuario: async (parent, args, context) => {
             if (context.userData.rol === "ADMINISTRADOR") {
-                const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
-                    nombres: args.nombres,
-                    apellidos: args.apellidos,
-                    identificacion: args.identificacion,
-                    correo: args.correo,
-                    rol: args.rol,
-                    estado: args.estado,
-                });
-                return usuarioEditado;
-            }else if(context.userData.rol==="LIDER"){
-                if(!(args.estado==="NO AUTORIZADO")){
-                    const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
+                const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
+                const hashedPassword = await bcrypt.hash(args.password, salt);
+                const usuarioEditado = await UserModel.findByIdAndUpdate(
+                    args._id,
+                    {
                         nombres: args.nombres,
                         apellidos: args.apellidos,
                         identificacion: args.identificacion,
                         correo: args.correo,
                         rol: args.rol,
                         estado: args.estado,
-                    });
-                    return usuarioEditado;
-                }
+                        password: hashedPassword
+                    }
+                );
+                return usuarioEditado;
             }
-            return null
+            return null;
         },
     },
 };
