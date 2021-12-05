@@ -23,9 +23,8 @@ const tiposUsuario = gql`
             nombres: String!
             apellidos: String!
             correo: String!
-            rol: Enum_RolUsario!
-        ): #El campo _id no es obligatorio al crear porque lo asigna mongoDB.
-        #Los campos estado, rol e _id tienen valores por defecto. No son obligatorios
+            rol: Enum_RolUsario! #El campo _id no es obligatorio al crear porque lo asigna mongoDB.
+        ): #Los campos estado, rol e _id tienen valores por defecto. No son obligatorios
         Usuario
 
         eliminarUsuario(
@@ -53,7 +52,9 @@ const tiposUsuario = gql`
             password: String
         ): Usuario
 
-        editarEstadoUsuario(_id:ID!, estado: Enum_EstadoUsuario): Usuario
+        editarEstadoUsuario(_id: ID!, estado: Enum_EstadoUsuario): Usuario
+
+        editarEstadoEstudiante(_id: ID!, estado: Enum_EstadoUsuario): Usuario
     }
 `;
 

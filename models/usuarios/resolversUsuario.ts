@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { Enum_RolUsario } from "../enums/enums";
 import { UserModel } from "./users";
 
 const resolversUsuario = {
@@ -27,13 +28,15 @@ const resolversUsuario = {
                 return usuario;
             }
         },
-        leerEstudiantes: async (parent, args, context)=>{
+        leerEstudiantes: async (parent, args, context) => {
             if (context.userData.rol === "LIDER") {
-                const estudiantes = await UserModel.where({rol:'ESTUDIANTE'})
+                const estudiantes = await UserModel.where({
+                    rol: "ESTUDIANTE",
+                });
                 return estudiantes;
             }
-            return null
-        }
+            return null;
+        },
     },
 
     Mutation: {
@@ -121,9 +124,21 @@ const resolversUsuario = {
                     { new: true }
                 );
                 console.log(usuario);
-                return usuario
+                return usuario;
             }
-            return null
+            return null;
+        },
+
+        editarEstadoEstudiante: async (parent, args, context) => {
+            if (context.userData.rol === "LIDER") {
+                const estudiante = await UserModel.findByIdAndUpdate(
+                    args._id,
+                    { estado: args.estado },
+                    { new: true }
+                );
+                return estudiante;
+            }
+            return null;
         },
     },
 };
