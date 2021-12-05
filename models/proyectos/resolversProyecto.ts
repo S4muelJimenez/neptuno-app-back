@@ -9,7 +9,7 @@ const resolversProyecto = {
                     .populate("objetivos")
                     .populate("lider")
                     .populate("avances")
-                    .populate('inscripciones');
+                    .populate("inscripciones");
                 return proyectos;
             }
             return null;
@@ -20,18 +20,19 @@ const resolversProyecto = {
                 const proyectoBuscado = await ProjectModel.findOne({
                     nombre: args.nombre,
                 })
-                .populate("objetivos")
-                .populate("lider")
-                .populate("avances")
-                .populate('inscripciones');
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
                 return proyectoBuscado;
             } else if (Object.keys(args).includes("_id")) {
                 const proyectoBuscado = await ProjectModel.findOne({
                     _id: args._id,
-                }).populate("objetivos")
-                .populate("lider")
-                .populate("avances")
-                .populate('inscripciones');
+                })
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
                 return proyectoBuscado;
             }
         },
@@ -80,10 +81,10 @@ const resolversProyecto = {
             const proyecto = await ProjectModel.findById({
                 _id: args.proyecto,
             })
-            .populate("objetivos")
-            .populate("lider")
-            .populate("avances")
-            .populate('inscripciones');
+                .populate("objetivos")
+                .populate("lider")
+                .populate("avances")
+                .populate("inscripciones");
             return proyecto;
         },
 
@@ -101,10 +102,11 @@ const resolversProyecto = {
                         lider: args.lider,
                     },
                     { new: true }
-                ).populate("objetivos")
-                .populate("lider")
-                .populate("avances")
-                .populate('inscripciones');
+                )
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
                 return proyecto;
             } else if (Object.keys(args).includes("nombre")) {
                 const proyecto = await ProjectModel.findByIdAndUpdate(
@@ -119,10 +121,11 @@ const resolversProyecto = {
                         lider: args.lider,
                     },
                     { new: true }
-                ).populate("objetivos")
-                .populate("lider")
-                .populate("avances")
-                .populate('inscripciones');
+                )
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
                 return proyecto;
             }
         },
@@ -158,11 +161,27 @@ const resolversProyecto = {
                     { _id: args._id },
                     { estado: args.estado },
                     { new: true }
-                ).populate("objetivos")
-                .populate("lider")
-                .populate("avances")
-                .populate('inscripciones');
-                return proyecto
+                )
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
+                return proyecto;
+            }
+            return null;
+        },
+
+        actualizarFaseProyecto: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const proyecto = await ProjectModel.findById(args._id)
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
+                if (proyecto.estado === "ACTIVO") {
+                    await proyecto.update({ fase: args.fase }, { new: true });
+                    return proyecto;
+                }
             }
             return null;
         },
