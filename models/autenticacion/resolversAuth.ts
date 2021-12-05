@@ -22,6 +22,7 @@ const resolversAuth = {
                     identificacion: usuario.identificacion,
                     nombres: usuario.nombres,
                     apellidos: usuario.apellidos,
+                    estado: usuario.estado,
                     correo: usuario.correo,
                     rol: usuario.rol,
                 }),
@@ -29,9 +30,9 @@ const resolversAuth = {
         },
 
         Ingreso: async (parent, args, context) => {
-
-            if (context.userData.estado === "AUTORIZADO") {
-                const usuario = await UserModel.findOne({ correo: args.correo });
+            console.log(context.userData.estado)
+            const usuario = await UserModel.findOne({ correo: args.correo });
+            if (usuario.estado === "AUTORIZADO") {
                 const isPasswordCorrect = await bcrypt.compare(
                     args.password,
                     usuario.password
@@ -44,12 +45,15 @@ const resolversAuth = {
                             nombres: usuario.nombres,
                             apellidos: usuario.apellidos,
                             correo: usuario.correo,
+                            estado: usuario.estado,
                             rol: usuario.rol,
                         }),
                     };
+                }else{
+                    throw new Error("Credenciales inválidas.")
                 }
-            }else{
-                return null
+            } else{
+                throw new Error("Usuario no autorizado");
             }
         },
 
@@ -68,6 +72,7 @@ const resolversAuth = {
                         identificacion: context.userData.identificacion,
                         nombres: context.userData.nombres,
                         apellidos: context.userData.apellidos,
+                        estado: context.userData.estado,
                         correo: context.userData.correo,
                         rol: context.userData.rol,
                     }),
