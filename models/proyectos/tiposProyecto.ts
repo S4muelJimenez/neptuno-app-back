@@ -18,10 +18,9 @@ const tiposProyecto = gql`
         objetivos: [Objetivo!]!
         lider: Usuario!
         fase: Enum_FaseProyecto!
-        inscripciones:[Inscripcion]
+        inscripciones: [Inscripcion]
         avances: [Avance]
         estado: Enum_EstadoProyecto!
-        
     }
     type Query {
         leerProyectos: [Proyecto]
@@ -43,24 +42,29 @@ const tiposProyecto = gql`
             descripcion: String!
         ): Proyecto
 
-        editarProyecto(
-            _id: ID!
-            nombre: String            
-        ): Proyecto
+        editarProyecto(_id: ID!, nombre: String): Proyecto
 
         editarObjetivos(
             proyecto: ID!
-            index:Int!
+            index: Int!
             descripcion: String
-            tipo:Enum_TipoObjetivo
-        ):Proyecto
-
-        eliminarProyecto(
-            _id: ID!                    
+            tipo: Enum_TipoObjetivo
         ): Proyecto
-    },
 
-    
+        eliminarProyecto(_id: ID!): Proyecto
+
+        aprobarProyecto(
+            _id: ID!
+            nombre: String
+            estado: Enum_EstadoProyecto!
+        ): Proyecto
+
+        actualizarFaseProyecto(
+            _id: ID!
+            nombre: String
+            fase: Enum_FaseProyecto
+        ): Proyecto
+    }
 
     #Falta incluir los avances y las inscripciones para ser mostradas al buscar un proyecto.
 `;

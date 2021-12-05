@@ -7,8 +7,9 @@ const resolversProyecto = {
             if (context.userData.rol === "ADMINISTRADOR") {
                 const proyectos = await ProjectModel.find()
                     .populate("objetivos")
-                    .populate('lider')
-                    .populate("avances");
+                    .populate("lider")
+                    .populate("avances")
+                    .populate('inscripciones');
                 return proyectos;
             }
             return null;
@@ -19,15 +20,18 @@ const resolversProyecto = {
                 const proyectoBuscado = await ProjectModel.findOne({
                     nombre: args.nombre,
                 })
-                    .populate("lider")
-                    .populate("objetivos");
+                .populate("objetivos")
+                .populate("lider")
+                .populate("avances")
+                .populate('inscripciones');
                 return proyectoBuscado;
             } else if (Object.keys(args).includes("_id")) {
                 const proyectoBuscado = await ProjectModel.findOne({
                     _id: args._id,
-                })
-                    .populate("lider")
-                    .populate("objetivos");
+                }).populate("objetivos")
+                .populate("lider")
+                .populate("avances")
+                .populate('inscripciones');
                 return proyectoBuscado;
             }
         },
@@ -68,15 +72,19 @@ const resolversProyecto = {
             return proyecto.populate("lider");
         },
         crearObjetivo: async (parent, args) => {
-            const objetivo =await ObjectiveModel.create({
+            const objetivo = await ObjectiveModel.create({
                 descripcion: args.descripcion,
                 tipo: args.tipo,
                 proyecto: args.proyecto,
             });
             const proyecto = await ProjectModel.findById({
                 _id: args.proyecto,
-            }).populate('lider').populate('objetivos')
-            return  proyecto
+            })
+            .populate("objetivos")
+            .populate("lider")
+            .populate("avances")
+            .populate('inscripciones');
+            return proyecto;
         },
 
         editarProyecto: async (parent, args) => {
@@ -93,8 +101,11 @@ const resolversProyecto = {
                         lider: args.lider,
                     },
                     { new: true }
-                );
-                return proyecto.populate("lider");
+                ).populate("objetivos")
+                .populate("lider")
+                .populate("avances")
+                .populate('inscripciones');
+                return proyecto;
             } else if (Object.keys(args).includes("nombre")) {
                 const proyecto = await ProjectModel.findByIdAndUpdate(
                     { _id: args._id },
@@ -108,8 +119,11 @@ const resolversProyecto = {
                         lider: args.lider,
                     },
                     { new: true }
-                );
-                return proyecto.populate("lider");
+                ).populate("objetivos")
+                .populate("lider")
+                .populate("avances")
+                .populate('inscripciones');
+                return proyecto;
             }
         },
 
@@ -136,6 +150,21 @@ const resolversProyecto = {
                 _id: args._id,
             });
             return proyecto;
+        },
+
+        aprobarProyecto: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const proyecto = await ProjectModel.findByIdAndUpdate(
+                    { _id: args._id },
+                    { estado: args.estado },
+                    { new: true }
+                ).populate("objetivos")
+                .populate("lider")
+                .populate("avances")
+                .populate('inscripciones');
+                return proyecto
+            }
+            return null;
         },
     },
 };
