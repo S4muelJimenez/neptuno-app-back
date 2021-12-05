@@ -1,11 +1,16 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "./users";
 
+
 const resolversUsuario = {
     Query: {
-        leerUsuarios: async (parent, args) => {
-            const usuarios = await UserModel.find();
-            return usuarios;
+        leerUsuarios: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const usuarios = await UserModel.find();
+                return usuarios;
+            }else{
+                return null;
+            }
         },
         leerUsuario: async (parent, args) => {
             if (Object.keys(args).includes("_id")) {
@@ -64,6 +69,22 @@ const resolversUsuario = {
                 return usuarioEliminado;
             }
         },
+        editarPerfil: async (parent, args, context) => {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(args.password, salt);
+
+            const usuarioEditado = await UserModel.findByIdAndUpdate(context.userData._id, {
+                nombres: args.nombres,
+                apellidos: args.apellidos,
+                identificacion: args.identificacion,
+                correo: args.correo,
+                password: hashedPassword,
+            },
+                { new: true }
+            );
+            return usuarioEditado;
+        },
+
         editarUsuario: async (parent, args, context) => {
             if (context.userData.rol === "ADMINISTRADOR") {
                 const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
