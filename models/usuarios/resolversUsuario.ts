@@ -1,14 +1,13 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "./users";
 
-
 const resolversUsuario = {
     Query: {
         leerUsuarios: async (parent, args, context) => {
             if (context.userData.rol === "ADMINISTRADOR") {
                 const usuarios = await UserModel.find();
                 return usuarios;
-            }else{
+            } else {
                 return null;
             }
         },
@@ -73,18 +72,19 @@ const resolversUsuario = {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(args.password, salt);
 
-            const usuarioEditado = await UserModel.findByIdAndUpdate(context.userData._id, {
-                nombres: args.nombres,
-                apellidos: args.apellidos,
-                identificacion: args.identificacion,
-                correo: args.correo,
-                password: hashedPassword,
-            },
+            const usuarioEditado = await UserModel.findByIdAndUpdate(
+                context.userData._id,
+                {
+                    nombres: args.nombres,
+                    apellidos: args.apellidos,
+                    identificacion: args.identificacion,
+                    correo: args.correo,
+                    password: hashedPassword,
+                },
                 { new: true }
             );
             return usuarioEditado;
         },
-
         editarUsuario: async (parent, args, context) => {
             if (context.userData.rol === "ADMINISTRADOR") {
                 const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
@@ -98,12 +98,25 @@ const resolversUsuario = {
                         correo: args.correo,
                         rol: args.rol,
                         estado: args.estado,
-                        password: hashedPassword
-                    }
+                        password: hashedPassword,
+                    },
+                    { new: true }
                 );
                 return usuarioEditado;
             }
             return null;
+        },
+        editarEstadoUsuario: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const usuario = await UserModel.findByIdAndUpdate(
+                    args._id,
+                    { estado: args.estado },
+                    { new: true }
+                );
+                console.log(usuario);
+                return usuario
+            }
+            return null
         },
     },
 };

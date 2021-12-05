@@ -3,12 +3,15 @@ import { ObjectiveModel } from "./objectives";
 
 const resolversProyecto = {
     Query: {
-        leerProyectos: async (parent, args) => {
-            const proyectos = await ProjectModel.find()
-                .populate("objetivos")
-                .populate('lider')
-                .populate("avances");
-            return proyectos;
+        leerProyectos: async (parent, args, context) => {
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const proyectos = await ProjectModel.find()
+                    .populate("objetivos")
+                    .populate('lider')
+                    .populate("avances");
+                return proyectos;
+            }
+            return null;
         },
 
         leerProyecto: async (parent, args) => {

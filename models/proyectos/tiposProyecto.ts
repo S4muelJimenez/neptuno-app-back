@@ -18,8 +18,8 @@ const tiposProyecto = gql`
         objetivos: [Objetivo!]!
         lider: Usuario!
         fase: Enum_FaseProyecto!
-        inscripciones:[Inscripcion]!
-        avances: [Avance]!
+        inscripciones:[Inscripcion]
+        avances: [Avance]
         estado: Enum_EstadoProyecto!
         
     }
