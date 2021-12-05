@@ -27,6 +27,13 @@ const resolversUsuario = {
                 return usuario;
             }
         },
+        leerEstudiantes: async (parent, args, context)=>{
+            if (context.userData.rol === "LIDER") {
+                const estudiantes = await UserModel.where({rol:'ESTUDIANTE'})
+                return estudiantes;
+            }
+            return null
+        }
     },
 
     Mutation: {
