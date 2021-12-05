@@ -43,6 +43,14 @@ const tiposUsuario = gql`
             rol: Enum_RolUsario
             estado: Enum_EstadoUsuario
         ): Usuario
+
+        editarPerfil(
+            identificacion: String
+            nombres: String
+            apellidos: String
+            correo: String
+            password: String
+        ):Usuario
     }
 `;
 

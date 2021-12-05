@@ -1,4 +1,6 @@
+import bcrypt from "bcryptjs";
 import { UserModel } from "./users";
+
 
 const resolversUsuario = {
     Query: {
@@ -63,31 +65,26 @@ const resolversUsuario = {
                 return usuarioEliminado;
             }
         },
-        editarUsuario: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
-                const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
-                    nombres: args.nombres,
-                    apellidos: args.apellidos,
-                    identificacion: args.identificacion,
-                    correo: args.correo,
-                    rol: args.rol,
-                    estado: args.estado,
-                });
-                return usuarioEditado;
-            }else if(context.userData.rol==="LIDER"){
-                if(!(args.estado==="NO AUTORIZADO")){
-                    const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
-                        nombres: args.nombres,
-                        apellidos: args.apellidos,
-                        identificacion: args.identificacion,
-                        correo: args.correo,
-                        rol: args.rol,
-                        estado: args.estado,
-                    });
-                    return usuarioEditado;
-                }
-            }
-            return null
+        editarPerfil: async (parent, args, context) => {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(args.password, salt);
+            
+            const usuarioEditado = await UserModel.findByIdAndUpdate(context.userData._id, {
+                nombres: args.nombres,
+                apellidos: args.apellidos,
+                identificacion: args.identificacion,
+                correo: args.correo,
+                password: hashedPassword,
+            },
+            { new: true }
+            );
+            return usuarioEditado;
+
+
+
+
+            
+
         },
     },
 };
