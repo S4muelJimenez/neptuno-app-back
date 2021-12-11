@@ -30,7 +30,7 @@ const resolversAuth = {
         },
 
         Ingreso: async (parent, args, context) => {
-            console.log(context.userData.estado)
+           
             const usuario = await UserModel.findOne({ correo: args.correo });
             if (true) {
                 const isPasswordCorrect = await bcrypt.compare(
