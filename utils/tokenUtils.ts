@@ -22,7 +22,7 @@ const validateToken = (token) => {
 }
 
 const generateToken = (payload) =>
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30 days" });
+    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // const getUserFromToken = async (token) => {
 //     if (!token) { //Esta linea se uso debido a que no habia ningun token generado. No es necesaria si el registro se hace correctamente para el primer usuario con hashedPassword (En caso contrario, puede usarse para eliminar la restriccion del token)
