@@ -4,7 +4,7 @@ import { ObjectiveModel } from "./objectives";
 const resolversProyecto = {
     Query: {
         leerProyectos: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            if (true) {
                 const proyectos = await ProjectModel.find()
                     .populate("objetivos")
                     .populate("lider")
