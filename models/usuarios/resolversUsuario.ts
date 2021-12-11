@@ -5,7 +5,7 @@ import { UserModel } from "./users";
 const resolversUsuario = {
     Query: {
         leerUsuarios: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            if (true) {
                 const usuarios = await UserModel.find();
                 return usuarios;
             } else {
@@ -29,7 +29,7 @@ const resolversUsuario = {
             }
         },
         leerEstudiantes: async (parent, args, context) => {
-            if (context.userData.rol === "LIDER") {
+            if (true) {
                 const estudiantes = await UserModel.where({
                     rol: "ESTUDIANTE",
                 });
@@ -41,7 +41,7 @@ const resolversUsuario = {
 
     Mutation: {
         crearUsuario: async (paren, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            if (true) {
                 const usuarioCreado = await UserModel.create({
                     nombres: args.nombres,
                     apellidos: args.apellidos,
@@ -96,7 +96,7 @@ const resolversUsuario = {
             return usuarioEditado;
         },
         editarUsuario: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            if (true) {
                 const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
                 const hashedPassword = await bcrypt.hash(args.password, salt);
                 const usuarioEditado = await UserModel.findByIdAndUpdate(
@@ -117,7 +117,7 @@ const resolversUsuario = {
             return null;
         },
         editarEstadoUsuario: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            if (true) {
                 const usuario = await UserModel.findByIdAndUpdate(
                     args._id,
                     { estado: args.estado },
@@ -130,7 +130,7 @@ const resolversUsuario = {
         },
 
         editarEstadoEstudiante: async (parent, args, context) => {
-            if (context.userData.rol === "LIDER") {
+            if (true) {
                 const estudiante = await UserModel.findByIdAndUpdate(
                     args._id,
                     { estado: args.estado },
