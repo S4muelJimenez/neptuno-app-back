@@ -7,11 +7,11 @@ import { ProgressModel } from "./progress";
 const resolversAvances = {
     Query: {
         arrayAvance: async (parent, args) => {
-            const Avance = await ProgressModel.find().populate("estudiante").populate("proyecto");
+            const Avance = await ProgressModel.find().populate("estudiante").populate("proyecto").populate('observacionesLider');
             return Avance;
         },
         avanceSimple: async (parent, args) => {
-            const avanceSolo = await ProgressModel.findOne({ _id: args._id }).populate("estudiante").populate("proyecto");
+            const avanceSolo = await ProgressModel.findOne({ _id: args._id }).populate("estudiante").populate("proyecto").populate('observacionesLider');
             return avanceSolo;
         }
     },

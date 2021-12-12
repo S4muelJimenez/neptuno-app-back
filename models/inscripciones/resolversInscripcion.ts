@@ -5,7 +5,7 @@ import { InscripcionesModel } from "./inscriptions";
 const resolversInscripcion = {
     Query: {
         leerInscripciones: async (parent, args) => {
-            const Inscripciones = await InscripcionesModel.find().populate('estudiante');
+            const Inscripciones = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante');
             return Inscripciones;
         },
         leerInscripcion: async (parent, args) => {
