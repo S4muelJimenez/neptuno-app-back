@@ -46,7 +46,7 @@ const tiposProyecto = gql`
 
         editarObjetivos(
             proyecto: ID!
-            index: Int!
+            index: Int
             descripcion: String
             tipo: Enum_TipoObjetivo
         ): Proyecto
@@ -62,7 +62,7 @@ const tiposProyecto = gql`
         actualizarFaseProyecto(
             _id: ID!
             nombre: String
-            fase: Enum_FaseProyecto
+            fase: Enum_FaseProyecto!
         ): Proyecto
     }
 
