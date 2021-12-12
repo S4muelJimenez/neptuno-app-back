@@ -26,13 +26,13 @@ const typeAvance = gql`
     
         editarAvance(
             _id: ID!,
-            descripcion:String
+            descripcion:String!
             estudiante: ID
             fechaAvance: Date
             proyecto: ID!
         ):Proyecto #Corregir return del resolver
 
-        eliminarAvance(_id:String, correo: String):Proyecto #Corregir return del resolver
+        eliminarAvance(_id:ID!, proyecto:ID!):Proyecto #Corregir return del resolver
 
         crearObservacion(
             avance:ID!
