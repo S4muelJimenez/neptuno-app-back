@@ -5,11 +5,11 @@ import { InscripcionesModel } from "./inscriptions";
 const resolversInscripcion = {
     Query: {
         leerInscripciones: async (parent, args) => {
-            const Inscripciones = await InscripcionesModel.find();
+            const Inscripciones = await InscripcionesModel.find().populate('estudiante');
             return Inscripciones;
         },
         leerInscripcion: async (parent, args) => {
-            const Inscripcion = await InscripcionesModel.findOne({ _id: args._id });
+            const Inscripcion = await InscripcionesModel.findOne({ _id: args._id }).populate('estudiante');
             return Inscripcion;
         }
     },
