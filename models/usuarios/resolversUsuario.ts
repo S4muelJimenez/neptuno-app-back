@@ -5,12 +5,12 @@ import { UserModel } from "./users";
 const resolversUsuario = {
     Query: {
         leerUsuarios: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const usuarios = await UserModel.find();
                 return usuarios;
-            } else {
-                return null;
-            }
+            // } else {
+            //     return null;
+            // }
         },
         leerUsuario: async (parent, args) => {
             if (Object.keys(args).includes("_id")) {
@@ -29,19 +29,19 @@ const resolversUsuario = {
             }
         },
         leerEstudiantes: async (parent, args, context) => {
-            if (context.userData.rol === "LIDER") {
+            // if (context.userData.rol === "LIDER") {
                 const estudiantes = await UserModel.where({
                     rol: "ESTUDIANTE",
                 });
                 return estudiantes;
-            }
-            return null;
+            // }
+            // return null;
         },
     },
 
     Mutation: {
         crearUsuario: async (paren, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const usuarioCreado = await UserModel.create({
                     nombres: args.nombres,
                     apellidos: args.apellidos,
@@ -55,9 +55,9 @@ const resolversUsuario = {
                     usuarioCreado.estado = args.estado;
                 }
                 return usuarioCreado;
-            }
+            // }
 
-            return null;
+            // return null;
         },
         eliminarUsuario: async (parent, args) => {
             //Buscar alternativa al codigo. P. ej, implementar un foreach para que recorra cada opcion: _id,correo,identificacion
@@ -96,7 +96,7 @@ const resolversUsuario = {
             return usuarioEditado;
         },
         editarUsuario: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
                 const hashedPassword = await bcrypt.hash(args.password, salt);
                 const usuarioEditado = await UserModel.findByIdAndUpdate(
@@ -113,11 +113,11 @@ const resolversUsuario = {
                     { new: true }
                 );
                 return usuarioEditado;
-            }
-            return null;
+            // }
+            // return null;
         },
         editarEstadoUsuario: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const usuario = await UserModel.findByIdAndUpdate(
                     args._id,
                     { estado: args.estado },
@@ -125,20 +125,20 @@ const resolversUsuario = {
                 );
                 console.log(usuario);
                 return usuario;
-            }
-            return null;
+            // }
+            // return null;
         },
 
         editarEstadoEstudiante: async (parent, args, context) => {
-            if (context.userData.rol === "LIDER") {
+            // if (context.userData.rol === "LIDER") {
                 const estudiante = await UserModel.findByIdAndUpdate(
                     args._id,
                     { estado: args.estado },
                     { new: true }
                 );
                 return estudiante;
-            }
-            return null;
+            // }
+            // return null;
         },
     },
 };

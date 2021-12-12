@@ -4,15 +4,15 @@ import { ObjectiveModel } from "./objectives";
 const resolversProyecto = {
     Query: {
         leerProyectos: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const proyectos = await ProjectModel.find()
                     .populate("objetivos")
                     .populate("lider")
                     .populate("avances")
                     .populate("inscripciones");
                 return proyectos;
-            }
-            return null;
+            // }
+            // return null;
         },
 
         leerProyecto: async (parent, args) => {
@@ -156,7 +156,7 @@ const resolversProyecto = {
         },
 
         aprobarProyecto: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const proyecto = await ProjectModel.findByIdAndUpdate(
                     { _id: args._id },
                     { estado: args.estado },
@@ -167,12 +167,12 @@ const resolversProyecto = {
                     .populate("avances")
                     .populate("inscripciones");
                 return proyecto;
-            }
-            return null;
+            // }
+            // return null;
         },
 
         actualizarFaseProyecto: async (parent, args, context) => {
-            if (context.userData.rol === "ADMINISTRADOR") {
+            // if (context.userData.rol === "ADMINISTRADOR") {
                 const proyecto = await ProjectModel.findById(args._id)
                     .populate("objetivos")
                     .populate("lider")
@@ -182,8 +182,8 @@ const resolversProyecto = {
                     await proyecto.update({ fase: args.fase }, { new: true });
                     return proyecto;
                 }
-            }
-            return null;
+            // }
+            // return null;
         },
     },
 };
