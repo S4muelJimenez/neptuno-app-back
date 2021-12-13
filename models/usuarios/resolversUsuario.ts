@@ -79,21 +79,35 @@ const resolversUsuario = {
             }
         },
         editarPerfil: async (parent, args, context) => {
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(args.password, salt);
 
-            const usuarioEditado = await UserModel.findByIdAndUpdate(
-                context.userData._id,
-                {
-                    nombres: args.nombres,
-                    apellidos: args.apellidos,
-                    identificacion: args.identificacion,
-                    correo: args.correo,
-                    password: hashedPassword,
-                },
-                { new: true }
-            );
-            return usuarioEditado;
+            if (args.password) {
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(args.password, salt);
+                const usuarioEditado = await UserModel.findByIdAndUpdate(
+                    context.userData._id,
+                    {
+                        nombres: args.nombres,
+                        apellidos: args.apellidos,
+                        identificacion: args.identificacion,
+                        correo: args.correo,
+                        password: hashedPassword,
+                    },
+                    { new: true }
+                );
+                return usuarioEditado;
+            } else {
+                const usuarioEditado = await UserModel.findByIdAndUpdate(
+                    context.userData._id,
+                    {
+                        nombres: args.nombres,
+                        apellidos: args.apellidos,
+                        identificacion: args.identificacion,
+                        correo: args.correo,
+                    },
+                    { new: true }
+                );
+                return usuarioEditado;
+            }
         },
         editarUsuario: async (parent, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
