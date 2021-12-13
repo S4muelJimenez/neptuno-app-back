@@ -173,13 +173,13 @@ const resolversProyecto = {
 
         actualizarFaseProyecto: async (parent, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
-                const proyecto = await ProjectModel.findById(args._id)
+                if (args.estado === "ACTIVO") {
+                const proyecto = await ProjectModel.findByIdAndUpdate({_id:args._id},{fase: args.fase }, { new: true })
                     .populate("objetivos")
                     .populate("lider")
                     .populate("avances")
                     .populate("inscripciones");
-                if (proyecto.estado === "ACTIVO") {
-                    await proyecto.update({ fase: args.fase }, { new: true });
+                    
                     return proyecto;
                 }
             // }
