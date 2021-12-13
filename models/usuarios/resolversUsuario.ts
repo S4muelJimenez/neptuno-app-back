@@ -6,8 +6,8 @@ const resolversUsuario = {
     Query: {
         leerUsuarios: async (parent, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
-                const usuarios = await UserModel.find();
-                return usuarios;
+            const usuarios = await UserModel.find();
+            return usuarios;
             // } else {
             //     return null;
             // }
@@ -30,10 +30,10 @@ const resolversUsuario = {
         },
         leerEstudiantes: async (parent, args, context) => {
             // if (context.userData.rol === "LIDER") {
-                const estudiantes = await UserModel.where({
-                    rol: "ESTUDIANTE",
-                });
-                return estudiantes;
+            const estudiantes = await UserModel.where({
+                rol: "ESTUDIANTE",
+            });
+            return estudiantes;
             // }
             // return null;
         },
@@ -42,19 +42,19 @@ const resolversUsuario = {
     Mutation: {
         crearUsuario: async (paren, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
-                const usuarioCreado = await UserModel.create({
-                    nombres: args.nombres,
-                    apellidos: args.apellidos,
-                    identificacion: args.identificacion,
-                    correo: args.correo,
-                    rol: args.rol,
-                });
+            const usuarioCreado = await UserModel.create({
+                nombres: args.nombres,
+                apellidos: args.apellidos,
+                identificacion: args.identificacion,
+                correo: args.correo,
+                rol: args.rol,
+            });
 
-                if (Object.keys(args).includes("estado")) {
-                    //Esta validacion es necesaria pues de lo contrario solo tomaria el dato por defecto
-                    usuarioCreado.estado = args.estado;
-                }
-                return usuarioCreado;
+            if (Object.keys(args).includes("estado")) {
+                //Esta validacion es necesaria pues de lo contrario solo tomaria el dato por defecto
+                usuarioCreado.estado = args.estado;
+            }
+            return usuarioCreado;
             // }
 
             // return null;
@@ -97,6 +97,8 @@ const resolversUsuario = {
         },
         editarUsuario: async (parent, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
+
+            if (args.password) {
                 const salt = await bcrypt.genSalt(10); //Rondas de encriptacion
                 const hashedPassword = await bcrypt.hash(args.password, salt);
                 const usuarioEditado = await UserModel.findByIdAndUpdate(
@@ -113,30 +115,47 @@ const resolversUsuario = {
                     { new: true }
                 );
                 return usuarioEditado;
+            } else {
+                const usuarioEditado = await UserModel.findByIdAndUpdate(
+                    args._id,
+                    {
+                        nombres: args.nombres,
+                        apellidos: args.apellidos,
+                        identificacion: args.identificacion,
+                        correo: args.correo,
+                        rol: args.rol,
+                        estado: args.estado,
+                    },
+                    { new: true }
+                );
+                return usuarioEditado;
+
+            }
+
             // }
             // return null;
         },
         editarEstadoUsuario: async (parent, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
-                const usuario = await UserModel.findByIdAndUpdate(
-                    args._id,
-                    { estado: args.estado },
-                    { new: true }
-                );
-                console.log(usuario);
-                return usuario;
+            const usuario = await UserModel.findByIdAndUpdate(
+                args._id,
+                { estado: args.estado },
+                { new: true }
+            );
+            console.log(usuario);
+            return usuario;
             // }
             // return null;
         },
 
         editarEstadoEstudiante: async (parent, args, context) => {
             // if (context.userData.rol === "LIDER") {
-                const estudiante = await UserModel.findByIdAndUpdate(
-                    args._id,
-                    { estado: args.estado },
-                    { new: true }
-                );
-                return estudiante;
+            const estudiante = await UserModel.findByIdAndUpdate(
+                args._id,
+                { estado: args.estado },
+                { new: true }
+            );
+            return estudiante;
             // }
             // return null;
         },
