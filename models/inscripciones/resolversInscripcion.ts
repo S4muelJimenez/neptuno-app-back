@@ -5,8 +5,14 @@ import { InscripcionesModel } from "./inscriptions";
 const resolversInscripcion = {
     Query: {
         leerInscripciones: async (parent, args) => {
-            const Inscripciones = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante');
-            return Inscripciones;
+            if(Object.keys(args).includes('proyecto')){
+                const Inscripciones = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante');
+                return Inscripciones;
+            }else{
+                const Inscripciones = await InscripcionesModel.find().populate('estudiante');
+                return Inscripciones;
+            }
+
         },
         leerInscripcion: async (parent, args) => {
             const Inscripcion = await InscripcionesModel.findOne({ _id: args._id }).populate('estudiante');
