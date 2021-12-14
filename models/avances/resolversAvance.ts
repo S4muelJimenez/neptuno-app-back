@@ -35,7 +35,7 @@ const resolversAvances = {
             const avanceEditado= await ProgressModel.findByIdAndUpdate(args._id, {
                 descripcion: args.descripcion,
                 estudiante: args.estudiante,
-                fechaAvance: Date.now(),
+                // fechaAvance: Date.now(),
                 proyecto: args.proyecto,
             },
             { new: true });
