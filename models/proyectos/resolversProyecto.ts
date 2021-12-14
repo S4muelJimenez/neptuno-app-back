@@ -65,7 +65,7 @@ const resolversProyecto = {
 
     Mutation: {
         crearProyecto: async (parent, args, context) => {
-            if(context.userData.rol==="ADMINISTRADOR"){
+            if(context.userData.rol==="ADMINISTRADOR" && context.userData.rol==="ESTUDIANTE"){
 
                 const proyecto = await ProjectModel.create({
                     nombre: args.nombre,
