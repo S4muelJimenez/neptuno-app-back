@@ -64,21 +64,40 @@ const resolversProyecto = {
     },
 
     Mutation: {
-        crearProyecto: async (parent, args) => {
-            const proyecto = await ProjectModel.create({
-                nombre: args.nombre,
-                presupuesto: args.presupuesto,
-                fechaInicio: args.fechaInicio,
-                fechaTerminacion: args.fechaTerminacion,
-                lider: args.lider,
-            });
-            if (Object.keys(args).includes("estado")) {
-                proyecto.estado = args.estado;
+        crearProyecto: async (parent, args, context) => {
+            if(context.userData.rol==="ADMINISTRADOR"){
+
+                const proyecto = await ProjectModel.create({
+                    nombre: args.nombre,
+                    presupuesto: args.presupuesto,
+                    fechaInicio: args.fechaInicio,
+                    fechaTerminacion: args.fechaTerminacion,
+                    lider: args.lider,
+                });
+                if (Object.keys(args).includes("estado")) {
+                    proyecto.estado = args.estado;
+                }
+                if (Object.keys(args).includes("fase")) {
+                    proyecto.fase = args.fase;
+                }
+                return proyecto.populate("lider");
             }
-            if (Object.keys(args).includes("fase")) {
-                proyecto.fase = args.fase;
+            if(context.userData.rol === "LIDER"){
+                const proyecto = await ProjectModel.create({
+                    nombre: args.nombre,
+                    presupuesto: args.presupuesto,
+                    fechaInicio: args.fechaInicio,
+                    fechaTerminacion: args.fechaTerminacion,
+                    lider: context.userData._id,
+                });
+                if (Object.keys(args).includes("estado")) {
+                    proyecto.estado = args.estado;
+                }
+                if (Object.keys(args).includes("fase")) {
+                    proyecto.fase = args.fase;
+                }
+                return proyecto.populate("lider");
             }
-            return proyecto.populate("lider");
         },
         crearObjetivo: async (parent, args) => {
             const objetivo = await ObjectiveModel.create({
