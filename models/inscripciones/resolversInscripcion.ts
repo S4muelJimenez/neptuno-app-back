@@ -1,3 +1,4 @@
+import { Enum_EstadoInscripcion } from "../enums/enums";
 import { ProjectModel } from "../proyectos/projects";
 import { InscripcionesModel } from "./inscriptions";
 
@@ -21,13 +22,13 @@ const resolversInscripcion = {
 
         leerInscripcionesPendientes: async (parent, args) => {
             if(Object.keys(args).includes('estudiante')){
-                const InscripcionesPendientes = await InscripcionesModel.find({estudiante:args.estudiante}).populate('estudiante').populate('proyecto')
+                const InscripcionesPendientes = await InscripcionesModel.find({estudiante:args.estudiante, estado:Enum_EstadoInscripcion.pendiente}).populate('estudiante').populate('proyecto')
                 return InscripcionesPendientes
-            } else if(Object.keys(args).include('proyecto')){
-                const InscripcionesPendientes = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante').populate('proyecto')
+            } else if(Object.keys(args).includes('proyecto')){
+                const InscripcionesPendientes = await InscripcionesModel.find({proyecto:args.proyecto, estado:Enum_EstadoInscripcion.pendiente}).populate('estudiante').populate('proyecto')
                 return InscripcionesPendientes
             }else{
-                const InscripcionesPendientes = await InscripcionesModel.find({estado:"PENDIENTE"}).populate('estudiante').populate('proyecto')
+                const InscripcionesPendientes = await InscripcionesModel.find({estado:Enum_EstadoInscripcion.pendiente}).populate('estudiante').populate('proyecto')
                 return InscripcionesPendientes
             }
         }

@@ -49,11 +49,7 @@ const resolversAuth = {
                             rol: usuario.rol,
                         }),
                     };
-                }else{
-                    throw new Error("Credenciales inválidas.")
                 }
-            } else{
-                throw new Error("Usuario no autorizado");
             }
         },
 
