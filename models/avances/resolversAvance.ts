@@ -25,39 +25,30 @@ const resolversAvances = {
                 fechaAvance: Date.now(),
                 proyecto: args.proyecto,
             });
-
-            const proyectoTraido = await ProjectModel.findById({
-                _id: args.proyecto
-            }).populate("avances")
-            .populate("lider")
-            .populate("objetivos");
             
-            return proyectoTraido;
+            return avanceCreado.populate('observacionesLider');
 
         },
 
         editarAvance: async (parent, args) => {
-            const proyectoTraido = await ProjectModel.findById(args.proyecto).populate("lider").populate("objetivos").populate("avances").populate("inscripciones")
-            await ProgressModel.findByIdAndUpdate(args._id, {
+            
+            const avanceEditado= await ProgressModel.findByIdAndUpdate(args._id, {
                 descripcion: args.descripcion,
                 estudiante: args.estudiante,
-                fechaAvance: args.fechaAvance,
+                fechaAvance: Date.now(),
                 proyecto: args.proyecto,
-            });
-            return proyectoTraido;
+            },
+            { new: true }).populate('observacionesLider');
+            return avanceEditado;
         },
 
         eliminarAvance: async (parent, args) => {
-
-            if (Object.keys(args).includes(`_id`)) {
+                await LeaderObservationModel.deleteMany({
+                    avance: args._id,
+                });
                 const avanceEliminado = await ProgressModel.findOneAndDelete({ _id: args._id });
                 return avanceEliminado;
-            } else if (Object.keys(args).includes(`correo`)) {
-                const avanceEliminado = await ProgressModel.findOneAndDelete({ correo: args.correo });
-                return avanceEliminado;
-            }
-
-
+            
         },
 
         crearObservacion: async (parent, args) => {
@@ -66,7 +57,20 @@ const resolversAvances = {
                 avance: args.avance,
                 lider: args.lider,
                 observacion: args.observacion,
+                fechaObservacion: Date.now(),
+                
             })
+            return avanceBuscado
+        },
+
+        editarObservacion: async (parent, args) => {
+            const avanceBuscado = await ProgressModel.findOne({avance: args.avance}).populate("observacionesLider")
+            await LeaderObservationModel.findByIdAndUpdate(args._id,
+                {
+                    observacion: args.observacion,
+                    fechaObservacion: Date.now(),
+                },
+                { new: true })
             return avanceBuscado
         }
     },

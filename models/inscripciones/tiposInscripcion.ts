@@ -12,7 +12,7 @@ const tiposInscripcion = gql`
 
 
     type Query{
-        leerInscripciones(proyecto: ID!): [Inscripcion]
+        leerInscripciones(proyecto: ID): [Inscripcion]
         leerInscripcion(_id:ID!):Inscripcion
     }
 

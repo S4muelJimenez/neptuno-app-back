@@ -9,6 +9,13 @@ const typeAvance = gql`
         proyecto: Proyecto!
     }
 
+    type ObservacionesLider{
+        _id: ID!,
+        observacion:String!
+        lider: Usuario!
+        avance:Avance!
+        fechaObservacion:Date!
+    }
 
     type Query{
         arrayAvance(proyecto:ID!): [Avance]
@@ -22,31 +29,32 @@ const typeAvance = gql`
             estudiante: ID!
             fechaAvance: Date
             proyecto: ID!
-        ):Proyecto #Corregir return del resolver
+        ):Avance #Corregir return del resolver
     
         editarAvance(
             _id: ID!,
             descripcion:String!
             estudiante: ID
             fechaAvance: Date
-            proyecto: ID!
-        ):Proyecto #Corregir return del resolver
+            proyecto: ID
+        ):Avance #Corregir return del resolver
 
-        eliminarAvance(_id:ID!, proyecto:ID!):Proyecto #Corregir return del resolver
+        eliminarAvance(_id:ID!, proyecto:ID):Proyecto #Corregir return del resolver
 
         crearObservacion(
             avance:ID!
             observacion:String!
             lider:ID!
+            fechaObservacion:Date
+        ):Avance
+
+        editarObservacion(
+            _id: ID!
+            observacion:String!
+            fechaObservacion:Date
         ):Avance
     }
 
-    type ObservacionesLider{
-        _id: ID!,
-        observacion:String!
-        lider: Usuario!
-        avance:Avance!
-    }
 
 `;
 

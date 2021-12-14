@@ -24,6 +24,7 @@ const tiposUsuario = gql`
             apellidos: String!
             correo: String!
             rol: Enum_RolUsario! #El campo _id no es obligatorio al crear porque lo asigna mongoDB.
+            password: String!
         ): #Los campos estado, rol e _id tienen valores por defecto. No son obligatorios
         Usuario
 

@@ -42,12 +42,15 @@ const resolversUsuario = {
     Mutation: {
         crearUsuario: async (paren, args, context) => {
             // if (context.userData.rol === "ADMINISTRADOR") {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(args.password, salt);
             const usuarioCreado = await UserModel.create({
                 nombres: args.nombres,
                 apellidos: args.apellidos,
                 identificacion: args.identificacion,
                 correo: args.correo,
                 rol: args.rol,
+                password: hashedPassword,
             });
 
             if (Object.keys(args).includes("estado")) {
