@@ -38,8 +38,8 @@ const resolversAvances = {
                 // fechaAvance: Date.now(),
                 proyecto: args.proyecto,
             },
-            { new: true });
-            return avanceEditado.populate('observacionesLider');
+            { new: true }).populate('observacionesLider').populate("estudiante").populate("proyecto");
+            return avanceEditado;
         },
 
         eliminarAvance: async (parent, args) => {
@@ -64,7 +64,7 @@ const resolversAvances = {
         },
 
         editarObservacion: async (parent, args) => {
-            const avanceBuscado = await ProgressModel.findOne({avance: args.avance}).populate("observacionesLider")
+            const avanceBuscado = await ProgressModel.findOne({avance: args.avance}).populate("observacionesLider").populate("estudiante").populate("proyecto")
             await LeaderObservationModel.findByIdAndUpdate(args._id,
                 {
                     observacion: args.observacion,

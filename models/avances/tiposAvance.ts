@@ -7,6 +7,7 @@ const typeAvance = gql`
         estudiante: Usuario!
         fechaAvance: Date!
         proyecto: Proyecto!
+        observacionesLider:[ObservacionesLider]!
     }
 
     type ObservacionesLider{
