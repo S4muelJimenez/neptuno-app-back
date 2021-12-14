@@ -4,15 +4,23 @@ import { ObjectiveModel } from "./objectives";
 const resolversProyecto = {
     Query: {
         leerProyectos: async (parent, args, context) => {
-            // if (context.userData.rol === "ADMINISTRADOR") {
+            if (context.userData.rol === "ADMINISTRADOR") {
                 const proyectos = await ProjectModel.find()
                     .populate("objetivos")
                     .populate("lider")
                     .populate("avances")
                     .populate("inscripciones");
                 return proyectos;
-            // }
-            // return null;
+            }else if(context.userData.rol === "LIDER"){
+                const proyectos = await ProjectModel.find({lider:context.userData._id})
+                    .populate("objetivos")
+                    .populate("lider")
+                    .populate("avances")
+                    .populate("inscripciones");
+                return proyectos;
+
+            }
+            
         },
 
         leerProyecto: async (parent, args) => {
