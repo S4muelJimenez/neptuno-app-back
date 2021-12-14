@@ -27,7 +27,7 @@ const typeAvance = gql`
         crearAvance(
             descripcion:String!
             estudiante: ID!
-            fechaAvance: Date
+            fechaAvance:Date
             proyecto: ID!
         ):Avance #Corregir return del resolver
     
@@ -35,7 +35,7 @@ const typeAvance = gql`
             _id: ID!,
             descripcion:String!
             estudiante: ID
-            fechaAvance: Date
+            fechaAvance:Date
             proyecto: ID
         ):Avance #Corregir return del resolver
 

@@ -38,8 +38,8 @@ const resolversAvances = {
                 fechaAvance: Date.now(),
                 proyecto: args.proyecto,
             },
-            { new: true }).populate('observacionesLider');
-            return avanceEditado;
+            { new: true });
+            return avanceEditado.populate('observacionesLider');
         },
 
         eliminarAvance: async (parent, args) => {
