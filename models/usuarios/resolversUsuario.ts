@@ -5,12 +5,14 @@ import { UserModel } from "./users";
 const resolversUsuario = {
     Query: {
         leerUsuarios: async (parent, args, context) => {
-            // if (context.userData.rol === "ADMINISTRADOR") {
-            const usuarios = await UserModel.find();
-            return usuarios;
-            // } else {
-            //     return null;
-            // }
+            if (context.userData.rol === "ADMINISTRADOR") {
+                const usuarios = await UserModel.find();
+                return usuarios;
+            } else if (context.userData.rol === "LIDER") {
+                const usuarios = await UserModel.find({ rol: Enum_RolUsario.estudiante })
+                return usuarios;
+            }
+
         },
         leerUsuario: async (parent, args) => {
             if (Object.keys(args).includes("_id")) {
