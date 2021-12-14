@@ -6,17 +6,30 @@ const resolversInscripcion = {
     Query: {
         leerInscripciones: async (parent, args) => {
             if(Object.keys(args).includes('proyecto')){
-                const Inscripciones = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante');
+                const Inscripciones = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante').populate('proyecto');
                 return Inscripciones;
             }else{
-                const Inscripciones = await InscripcionesModel.find().populate('estudiante');
+                const Inscripciones = await InscripcionesModel.find().populate('estudiante').populate('proyecto');
                 return Inscripciones;
             }
 
         },
         leerInscripcion: async (parent, args) => {
-            const Inscripcion = await InscripcionesModel.findOne({ _id: args._id }).populate('estudiante');
+            const Inscripcion = await InscripcionesModel.findOne({ _id: args._id }).populate('estudiante').populate('proyecto');
             return Inscripcion;
+        },
+
+        leerInscripcionesPendientes: async (parent, args) => {
+            if(Object.keys(args).includes('estudiante')){
+                const InscripcionesPendientes = await InscripcionesModel.find({estudiante:args.estudiante}).populate('estudiante').populate('proyecto')
+                return InscripcionesPendientes
+            } else if(Object.keys(args).include('proyecto')){
+                const InscripcionesPendientes = await InscripcionesModel.find({proyecto:args.proyecto}).populate('estudiante').populate('proyecto')
+                return InscripcionesPendientes
+            }else{
+                const InscripcionesPendientes = await InscripcionesModel.find({estado:"PENDIENTE"}).populate('estudiante').populate('proyecto')
+                return InscripcionesPendientes
+            }
         }
     },
 

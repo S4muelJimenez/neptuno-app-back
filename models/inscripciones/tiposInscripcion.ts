@@ -14,6 +14,7 @@ const tiposInscripcion = gql`
     type Query{
         leerInscripciones(proyecto: ID): [Inscripcion]
         leerInscripcion(_id:ID!):Inscripcion
+        leerInscripcionesPendientes(proyecto: ID, estudiante: ID): [Inscripcion]
     }
 
 
