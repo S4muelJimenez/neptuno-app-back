@@ -42,7 +42,7 @@ const tiposProyecto = gql`
             descripcion: String!
         ): Proyecto
 
-        editarProyecto(_id: ID!, nombre: String): Proyecto
+        editarProyecto(_id: ID!, nombre: String, presupuesto: Float): Proyecto
 
         editarObjetivos(
             proyecto: ID!

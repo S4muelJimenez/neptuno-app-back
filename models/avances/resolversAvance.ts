@@ -32,7 +32,7 @@ const resolversAvances = {
 
         editarAvance: async (parent, args) => {
             
-            const avanceEditado= await ProgressModel.findByIdAndUpdate(args._id, {
+            const avanceEditado= await ProgressModel.findOneAndUpdate({_id:args._id}, {
                 descripcion: args.descripcion,
                 estudiante: args.estudiante,
                 // fechaAvance: Date.now(),
